@@ -1,0 +1,17 @@
+{
+  "hash": "2ba0c8dbdbf72bda8b1e91fda4417078",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Proposal title\"\nsubtitle: \"Proposal\"\nauthor: \n  - name: \"Team Name\"\n    affiliations:\n      - name: \"School of Information, University of Arizona\"\ndescription: \"Project description\"\nformat:\n  html:\n    code-tools: true\n    code-overflow: wrap\n    code-line-numbers: true\n    embed-resources: true\neditor: visual\ncode-annotations: hover\nexecute:\n  warning: false\n---\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n```\n:::\n\n\n## Dataset\n\n\n::: {.cell}\n\n:::\n\n\nA brief description of your dataset including its provenance, dimensions, etc. as well as the reason why you chose this dataset.\n\nMake sure to load the data and use inline code for some of this information.\n\n## Questions\n\nThe two questions you want to answer.\n\n## Analysis plan\n\n-   A plan for answering each of the questions including the variables involved, variables to be created (if any), external data to be merged in (if any).\n",
+    "supporting": [
+      "proposal_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
