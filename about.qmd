@@ -4,7 +4,8 @@ format: html
 editor: visual
 ---
 
-This project was developed by **\[MildCats\]** For [INFO 526 - Data Analysis and Visualization](https://datavizaz.org/) at the University of Arizona, taught by Dr. Greg Chism. The team is comprised of the following team members.
+This project was developed by **\[Mild Cats\]** For [INFO 526 - Data Analysis and Visualization](https://datavizaz.org/) at the University of Arizona, taught by Dr. Greg Chism. The team is comprised of the following team members.
+
 
 -   Team member 1: Yash Salokhe Final year graduate student in school of Information Science, would be primarily contributing as a Project Manager to Project - 1.
 
