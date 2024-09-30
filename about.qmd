@@ -6,11 +6,15 @@ editor: visual
 
 This project was developed by **\[Mild Cats\]** For [INFO 526 - Data Analysis and Visualization](https://datavizaz.org/) at the University of Arizona, taught by Dr. Greg Chism. The team is comprised of the following team members.
 
-
 -   Team member 1: Siva Bhargav, Ravula Final year graduate student in school of Information Science, would be primarily contributing as a Project Manager to Project - 1.
 
--   Team member 2: One sentence description of Team member 2 (e.g., year, major, etc.).
+-   Team member 2: Prajwal Sathyanarayana, First year Grad student at College of Information Science, \
+    University of Arizona, contributing as Visualization Specialist
 
--   Team member 3: One sentence description of Team member 3 (e.g., year, major, etc.).
+-   Team member 3: Sankalp Sethi
 
--   Team member 4: One sentence description of Team member 4 (e.g., year, major, etc.).
+-   Team member 4: Vishnu\
+    \
+    Team member 5: Tirth Shah\
+    Team member 6: Soloman\
+    Team member 7: Yash Salokhe
