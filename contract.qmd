@@ -76,7 +76,7 @@
 
 **Communication Plan**
 
--   **Meeting Schedule:** Weekly on Fridays at 7:00 PM via Google Meet
+-   **Meeting Schedule:** Weekly on Fridays at 03:00 PM via Google Meet
 
 -   **Primary Communication Platform:** WhatsApp Group, Slack Group
 
@@ -84,15 +84,7 @@
 
 **Work Plan and Timeline**
 
--   **Milestones:**
-    -   **Data Collection and Cleaning:** Completed by \[Date\].
-
-    -   **Exploratory Data Analysis:** Completed by \[Date\].
-
-    -   **Design of Visualizations:** Completed by \[Date\].
-
-    -   **Final Presentation and Report:** Completed by \[Date\].
--   **Task Assignments:** \[Use a table to assign tasks to team members with due dates.\]
+-   Real time project updates can be viewed [here](https://docs.google.com/spreadsheets/d/1a_E8TZVmqjrWEYpPCJDA2rBPvrxk70A2HlkklfOmul0/edit?gid=0#gid=0)
 
 **Accountability and Expectations**
 
@@ -117,7 +109,7 @@ By signing below, each team member agrees to the terms of this contract and comm
 
 -   **Sankalp Sethi** Date: 09/30/2024
 
--   Siva Bhargav Ravula Date: \_\_\_\_\_\_\_\_\_\_\_
+-   **Siva Bhargav Ravula** Date: 09/30/2024
 
 -   Solman Sarva Date: \_\_\_\_\_\_\_\_\_\_\_
 
