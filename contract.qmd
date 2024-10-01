@@ -1,0 +1,128 @@
+**Team Project Contract**\
+
+**Project Title:** Analysis and Visualization of Match Trends in Premier League (2021-2022)\
+**Team Members:**
+
+1.  Prajwal Sathyanarayana (prajwals\@arizona.edu)
+
+2.  Sankalp Sethi (sankalpsethi\@arizona.edu)
+
+3.  Siva Bhargav Ravula (sivabhargav\@arizona.edu)
+
+4.  Solman Sarva (solmansarva\@arizona.edu)
+
+5.  Tirth Piyush Shah (tirthshah1\@arizona.edu)
+
+6.  Vishnu Rendla (vishnurendla\@arizona.edu)
+
+7.  Yash Salokhe (yashsalokhe\@arizona.edu)
+
+**Project Overview**
+
+-   **Project Goals:**
+
+    -   This project explores Premier League match data from the 2021-2022 season, combined with additional supplementary datasets, to answer research questions about match outcomes, referee decisions, team performance, and betting odds accuracy.
+
+    -   The goal is to analyze trends in fouls, cards, home-team advantages, and betting outcomes, while investigating whether referee behavior influences match results.
+
+-   **Expected Deliverables**
+
+    -   Cleaned and merged dataset combining match and betting data
+
+    -   Visualizations: Scatter plots, bar charts, heatmaps, and model output visualizations
+
+    -   A final report with analysis and critiques of the methods used
+
+    -   Presentation slides summarizing the project’s findings
+
+    -   Reproducible R code submitted through GitHub
+
+    -   A quarto dashboard/shiny app (TBD)
+
+-   **Learning Objectives:**
+
+    -   Enhance skills in data visualization and analysis of referee behavior and trends in fouls and cards
+
+    -   Develop expertise in dataset merging and data integration, exploring home team advantages and referee behavior
+
+    -   Analyze how team strategies such as possession and shots on target correlate with match outcomes and betting odds
+
+        This list shall be expanded as needed through the course of the project, and learning shall not be limited by each members' role. We shall all contribute to, and learn throughout the project.
+
+**Team Roles and Responsibilities**
+
+-   **Roles :**
+    -   **Project Manager:** Siva Bhargav Ravula
+        -   Ensures timelines are met, organizes meetings, and manages communications.
+    -   **Data Analyst 1:** Yash Salokhe
+        -   Jointly responsible for data cleaning, analysis, and exploratory visualizations.
+    -   **Data Analyst 2:** Sankalp Sethi
+        -   Jointly responsible for data cleaning, analysis, and exploratory visualizations.
+    -   **Visualization Specialist 1:** Prajwal Sathyanarayana
+        -   Jointly conceptualizes and designs the final visualizations, makes aesthetic choices.
+    -   **Visualization Specialist 2:** Solman Sarva
+        -   Jointly conceptualizes and designs the final visualizations, makes aesthetic choices.
+    -   **Documentation Lead:** Vishnu Rendla
+        -   Keeps detailed notes of meetings, ensures all project decisions are documented, and handles the final report (with contributions from the team).
+    -   **Issue Manager:** Tirth Piyush Shah
+        -   This role will help us capturing the issues/feedback from peers or other teams and addressing them.
+-   **Responsibilities:**
+-   **General Responsibilities:** Each team member is responsible for:
+    -   Participating actively in all meetings.
+
+    -   Completing their assigned tasks on time.
+
+    -   Communicating openly and promptly if issues arise.
+
+**Communication Plan**
+
+-   **Meeting Schedule:** Weekly on Fridays at 7:00 PM via Google Meet
+
+-   **Primary Communication Platform:** WhatsApp Group, Slack Group
+
+-   **Decision-Making Process:** Decisions will be made by consensus; if a consensus cannot be reached, a vote will be taken.
+
+**Work Plan and Timeline**
+
+-   **Milestones:**
+    -   **Data Collection and Cleaning:** Completed by \[Date\].
+
+    -   **Exploratory Data Analysis:** Completed by \[Date\].
+
+    -   **Design of Visualizations:** Completed by \[Date\].
+
+    -   **Final Presentation and Report:** Completed by \[Date\].
+-   **Task Assignments:** \[Use a table to assign tasks to team members with due dates.\]
+
+**Accountability and Expectations**
+
+-   **Attendance Policy:** All team members are expected to attend scheduled meetings unless previously discussed.
+
+-   **Quality of Work:** All deliverables should be completed to a professional standard.
+
+-   **Deadlines:** All members are responsible for meeting deadlines. If someone cannot meet a deadline, they must notify the team in advance.
+
+**Conflict Resolution Plan**
+
+-   **Conflict Management:** If a conflict arises, team members will:
+    -   Discuss the issue openly during a team meeting.
+    -   Attempt to resolve the issue through compromise.
+    -   If the conflict persists, consult the project supervisor for guidance.
+
+**Signatures**
+
+By signing below, each team member agrees to the terms of this contract and commits to working together effectively and respectfully.
+
+-   Prajwal Sathyanarayana Date: \_\_\_\_\_\_\_\_\_\_\_
+
+-   **Sankalp Sethi** Date: 09/30/2024
+
+-   Siva Bhargav Ravula Date: \_\_\_\_\_\_\_\_\_\_\_
+
+-   Solman Sarva Date: \_\_\_\_\_\_\_\_\_\_\_
+
+-   Tirth Piyush Shah Date: \_\_\_\_\_\_\_\_\_\_\_
+
+-   Vishnu Rendla Date: \_\_\_\_\_\_\_\_\_\_\_
+
+-   Yash Salokhe Date: \_\_\_\_\_\_\_\_\_\_\_
