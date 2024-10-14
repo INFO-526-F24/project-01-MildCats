@@ -28,25 +28,11 @@
     "text": "Analysis plan\n\nA plan for answering each of the questions including the variables involved, variables to be created (if any), external data to be merged in (if any)."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Project Title",
-    "section": "",
-    "text": "Add project abstract here."
-  },
-  {
-    "objectID": "index.html#abstract",
-    "href": "index.html#abstract",
-    "title": "Project Title",
-    "section": "",
-    "text": "Add project abstract here."
-  },
-  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "This project was developed by [Mild Cats] For INFO 526 - Data Analysis and Visualization at the University of Arizona, taught by Dr. Greg Chism. The team is comprised of the following team members.\n\nTeam member 1: Siva Bhargav, Ravula Final year graduate student in school of Information Science, would be primarily contributing as a Project Manager to Project - 1.\nTeam member 2: One sentence description of Team member 2 (e.g., year, major, etc.).\nTeam member 3: One sentence description of Team member 3 (e.g., year, major, etc.).\nTeam member 4: One sentence description of Team member 4 (e.g., year, major, etc.)."
+    "text": "This project was developed by [Mild Cats] For INFO 526 - Data Analysis and Visualization at the University of Arizona, taught by Dr. Greg Chism. The team is comprised of the following team members.\n\nTeam member 1: Siva, Final year graduate student in school of Information Science, would be primarily contributing as a Project Manager to Project - 1.\nTeam member 2: Prajwal Sathyanarayana, First year Grad student at College of Information Science,\nUniversity of Arizona, contributing as Visualization Specialist\nTeam member 3: Sankalp Sethi\nTeam member 4: Vishnu\n\nTeam member 5: Tirth Shah\nTeam member 6: Soloman\nTeam member 7: Yash Salokhe"
   },
   {
     "objectID": "presentation.html#quarto",
@@ -60,7 +46,7 @@
     "href": "presentation.html#layouts",
     "title": "Project title",
     "section": "Layouts",
-    "text": "Layouts\nYou can use plain text\n\n\n\nor bullet points1\n\n\nor in two columns\n\n\n\nlike\nthis\n\nAnd add footnotes"
+    "text": "Layouts\nYou can use plain text\n\n\n\nor bullet points1\n\n\nor in two columns\n\n\nlike\nthis\n\nAnd add footnotes"
   },
   {
     "objectID": "presentation.html#code",
@@ -110,5 +96,26 @@
     "title": "Project title",
     "section": "Feeling adventurous?",
     "text": "Feeling adventurous?\n\nYou are welcomed to use the default styling of the slides. In fact, that's what I expect majority of you will do. You will differentiate yourself with the content of your presentation.\nBut some of you might want to play around with slide styling. Some solutions for this can be found at https://quarto.org/docs/presentations/revealjs."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Project Title",
+    "section": "",
+    "text": "Add project abstract here."
+  },
+  {
+    "objectID": "index.html#abstract",
+    "href": "index.html#abstract",
+    "title": "Project Title",
+    "section": "",
+    "text": "Add project abstract here."
+  },
+  {
+    "objectID": "contract.html",
+    "href": "contract.html",
+    "title": "Project Title",
+    "section": "",
+    "text": "Team Project Contract\n\nProject Title: Analysis and Visualization of Match Trends in Premier League (2021-2022)\nTeam Members:\n\nPrajwal Sathyanarayana (prajwals@arizona.edu)\nSankalp Sethi (sankalpsethi@arizona.edu)\nSiva Bhargav Ravula (sivabhargav@arizona.edu)\nSolman Sarva (solmansarva@arizona.edu)\nTirth Piyush Shah (tirthshah1@arizona.edu)\nVishnu Rendla (vishnurendla@arizona.edu)\nYash Salokhe (yashsalokhe@arizona.edu)\n\nProject Overview\n\nProject Goals:\n\nThis project explores Premier League match data from the 2021-2022 season, combined with additional supplementary datasets, to answer research questions about match outcomes, referee decisions, team performance, and betting odds accuracy.\nThe goal is to analyze trends in fouls, cards, home-team advantages, and betting outcomes, while investigating whether referee behavior influences match results.\n\nExpected Deliverables\n\nCleaned and merged dataset combining match and betting data\nVisualizations: Scatter plots, bar charts, heatmaps, and model output visualizations\nA final report with analysis and critiques of the methods used\nPresentation slides summarizing the project’s findings\nReproducible R code submitted through GitHub\nA quarto dashboard/shiny app (TBD)\n\nLearning Objectives:\n\nEnhance skills in data visualization and analysis of referee behavior and trends in fouls and cards\nDevelop expertise in dataset merging and data integration, exploring home team advantages and referee behavior\nAnalyze how team strategies such as possession and shots on target correlate with match outcomes and betting odds\nThis list shall be expanded as needed through the course of the project, and learning shall not be limited by each members’ role. We shall all contribute to, and learn throughout the project.\n\n\nTeam Roles and Responsibilities\n\nRoles :\n\nProject Manager: Siva Bhargav Ravula\n\nEnsures timelines are met, organizes meetings, and manages communications.\n\nData Analyst 1: Yash Salokhe\n\nJointly responsible for data cleaning, analysis, and exploratory visualizations.\n\nData Analyst 2: Sankalp Sethi\n\nJointly responsible for data cleaning, analysis, and exploratory visualizations.\n\nVisualization Specialist 1: Prajwal Sathyanarayana\n\nJointly conceptualizes and designs the final visualizations, makes aesthetic choices.\n\nVisualization Specialist 2: Solman Sarva\n\nJointly conceptualizes and designs the final visualizations, makes aesthetic choices.\n\nDocumentation Lead: Vishnu Rendla\n\nKeeps detailed notes of meetings, ensures all project decisions are documented, and handles the final report (with contributions from the team).\n\nIssue Manager: Tirth Piyush Shah\n\nThis role will help us capturing the issues/feedback from peers or other teams and addressing them.\n\n\nResponsibilities:\nGeneral Responsibilities: Each team member is responsible for:\n\nParticipating actively in all meetings.\nCompleting their assigned tasks on time.\nCommunicating openly and promptly if issues arise.\n\n\nCommunication Plan\n\nMeeting Schedule: Weekly on Fridays at 03:00 PM via Google Meet\nPrimary Communication Platform: WhatsApp Group, Slack Group\nDecision-Making Process: Decisions will be made by consensus; if a consensus cannot be reached, a vote will be taken.\n\nWork Plan and Timeline\n\nReal time project updates can be viewed here\n\nAccountability and Expectations\n\nAttendance Policy: All team members are expected to attend scheduled meetings unless previously discussed.\nQuality of Work: All deliverables should be completed to a professional standard.\nDeadlines: All members are responsible for meeting deadlines. If someone cannot meet a deadline, they must notify the team in advance.\n\nConflict Resolution Plan\n\nConflict Management: If a conflict arises, team members will:\n\nDiscuss the issue openly during a team meeting.\nAttempt to resolve the issue through compromise.\nIf the conflict persists, consult the project supervisor for guidance.\n\n\nSignatures\nBy signing below, each team member agrees to the terms of this contract and commits to working together effectively and respectfully.\n\nPrajwal Sathyanarayana Date: 09/30/2024\nSankalp Sethi Date: 09/30/2024\nSiva Bhargav Ravula Date: 09/30/2024\nSolman Sarva Date: 09/30/2024\nTirth Piyush Shah Date: 09/30/2024\nVishnu Rendla Date: 09/30/2024\nYash Salokhe Date: 09/30/2024"
   }
 ]
