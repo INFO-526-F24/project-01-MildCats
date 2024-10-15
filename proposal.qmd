@@ -29,6 +29,7 @@ library(tidyverse)
 The English Premier League is consistently ranked as the most viewed sports league in the world. With widespread popularity and fanfare, the Premier League is an interesting subject to further explore using data methods, to uncover interesting patterns and phenomenon that fans may otherwise miss. Many fans also bet heavily on the outcome of matches, with the Premier League being one of the most attractive events for bettors. Thus, analyzing match data in sync with betting odds data, we may also find some interesting results that may be of relevance to fans who are risking money. After conducting data analysis, we aim to visualize and present it in an intriguing, yet easy to understand fashion, in order to make it accessible to a wide range of audience.
 
 ## Datasets
+The base of our data is formed by the Premier League match dataset for the years 2021 to 2022. This dataset is extended to cover matches from years []. Then the longer dataset is augmented with the weather data during the Premier League schedule. Further, the entire schedule is supplemented with data of betting odds retrieved from popular betting site []. 
 
 ### Weather dataset
 
@@ -51,6 +52,8 @@ Data for the weather during matches has been retrieved from the weather data ven
 ```
 
 #### Ethics
+
+Although 
 
 ### Historical dataset
 
