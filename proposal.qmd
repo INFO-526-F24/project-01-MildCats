@@ -46,6 +46,7 @@ Data for the weather during matches has been retrieved from the weather data ven
 
 #### Collection method
 
+The data collection process began by creating an account on Visual Crossing. The platform aggregates weather data from multiple reliable sources, including weather stations, satellites, and meteorological organizations.The locations where the matches took place were entered to retrieve the corresponding weather data. The date ranges were specified to match the days when the games occurred. After setting these parameters, the metrics were finalized, with temperature in Celsius and distance in kilometers. These variables are critical for understanding match conditions and performance. Additionally, the platform offered the option to select either daily or hourly weather data; the daily option was chosen. The query was then executed, and the CSV file was downloaded. Finally, the date range was cross-checked with the actual match dates to ensure accuracy.    
 #### Overview
 
 ```{r}
@@ -61,7 +62,7 @@ write.csv(weather_21_22, "data/raw_data/weather 21-22/full_21_22.csv")
 
 #### Ethics
 
-Although 
+The weather data was collected through legal and legitimate means by using the Visual Crossing platform, by adhering to the platform's terms and conditions. Since there was a limit of 1000 record retrieval cap in a 24 hour period, the workload was divided among 6 team members. The data was not manipulated at any point, thus allowing transperency and clear documentation of the process. The data collected will solely be used for the intended purpose of this project.
 
 ### Historical dataset
 
