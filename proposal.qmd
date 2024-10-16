@@ -1,10 +1,14 @@
 ---
 title: "Premier League Data Analysis"
 subtitle: "Years X-Y"
+title: "Premier League Data Analysis"
+subtitle: "Years X-Y"
 author: 
+  - name: "Mildcats"
   - name: "Mildcats"
     affiliations:
       - name: "School of Information, University of Arizona"
+description: "Analysis and visualization of data relevant to the Premier League"
 description: "Analysis and visualization of data relevant to the Premier League"
 format:
   html:
@@ -89,9 +93,24 @@ The weather data was collected through legal and legitimate means by using the V
 
 ```{r}
 #| label: load-dataset-betting
+#| label: load-dataset-betting
 #| message: false
 ```
 
+#### Source
+
+#### Collection method
+
+#### Overview
+
+```{r}
+#| label: glimpse-of-betting-data
+#| message: false
+```
+
+#### Ethics
+
+## Research Questions
 #### Source
 
 #### Collection method
