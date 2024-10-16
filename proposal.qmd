@@ -1,14 +1,10 @@
 ---
 title: "Premier League Data Analysis"
 subtitle: "Years X-Y"
-title: "Premier League Data Analysis"
-subtitle: "Years X-Y"
 author: 
-  - name: "Mildcats"
   - name: "Mildcats"
     affiliations:
       - name: "School of Information, University of Arizona"
-description: "Analysis and visualization of data relevant to the Premier League"
 description: "Analysis and visualization of data relevant to the Premier League"
 format:
   html:
@@ -35,8 +31,8 @@ library(readr)
 The English Premier League is consistently ranked as the most viewed sports league in the world. With widespread popularity and fanfare, the Premier League is an interesting subject to further explore using data methods, to uncover interesting patterns and phenomenon that fans may otherwise miss. Many fans also bet heavily on the outcome of matches, with the Premier League being one of the most attractive events for bettors. Thus, analyzing match data in sync with betting odds data, we may also find some interesting results that may be of relevance to fans who are risking money. After conducting data analysis, we aim to visualize and present it in an intriguing, yet easy to understand fashion, in order to make it accessible to a wide range of audience.
 
 ## Datasets
-The base of our data is formed by the Premier League match dataset for the years 2021 to 2022. This dataset is extended to cover matches from years []. Then the longer dataset is augmented with the weather data during the Premier League schedule. Further, the entire schedule is supplemented with data of betting odds retrieved from popular betting site []. 
-The base of our data is formed by the Premier League match dataset for the years 2021 to 2022. This dataset is extended to cover matches from years []. Then the longer dataset is augmented with the weather data during the Premier League schedule. Further, the entire schedule is supplemented with data of betting odds retrieved from popular betting site []. 
+
+The base of our data is formed by the Premier League match dataset for the years 2021 to 2022. This dataset is extended to cover matches from years \[\]. Then the longer dataset is augmented with the weather data during the Premier League schedule. Further, the entire schedule is supplemented with data of betting odds retrieved from popular betting site \[\]. The base of our data is formed by the Premier League match dataset for the years 2021 to 2022. This dataset is extended to cover matches from years \[\]. Then the longer dataset is augmented with the weather data during the Premier League schedule. Further, the entire schedule is supplemented with data of betting odds retrieved from popular betting site \[\].
 
 ### Weather dataset
 
@@ -51,8 +47,8 @@ Data for the weather during matches has been retrieved from the weather data ven
 
 #### Collection method
 
-The data collection process began by creating an account on Visual Crossing. The platform aggregates weather data from multiple reliable sources, including weather stations, satellites, and meteorological organizations.The locations where the matches took place were entered to retrieve the corresponding weather data. The date ranges were specified to match the days when the games occurred. After setting these parameters, the metrics were finalized, with temperature in Celsius and distance in kilometers. These variables are critical for understanding match conditions and performance. Additionally, the platform offered the option to select either daily or hourly weather data; the daily option was chosen. The query was then executed, and the CSV file was downloaded. Finally, the date range was cross-checked with the actual match dates to ensure accuracy.    
-#### Overview
+The data collection process began by creating an account on Visual Crossing. The platform aggregates weather data from multiple reliable sources, including weather stations, satellites, and meteorological organizations.The locations where the matches took place were entered to retrieve the corresponding weather data. The date ranges were specified to match the days when the games occurred. After setting these parameters, the metrics were finalized, with temperature in Celsius and distance in kilometers. These variables are critical for understanding match conditions and performance. Additionally, the platform offered the option to select either daily or hourly weather data; the daily option was chosen. The query was then executed, and the CSV file was downloaded. Finally, the date range was cross-checked with the actual match dates to ensure accuracy.\
+\#### Overview
 
 ```{r}
 #| label: glimpse-of-weather-data
@@ -111,6 +107,7 @@ The weather data was collected through legal and legitimate means by using the V
 #### Ethics
 
 ## Research Questions
+
 #### Source
 
 #### Collection method
