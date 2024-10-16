@@ -1,6 +1,6 @@
 ---
-title: "Premier League Data Analysis"
-subtitle: "Years X-Y"
+title: "Analyzing English Premier League Match Data"
+subtitle: "Seasons 2021-23"
 author: 
   - name: "Mildcats"
     affiliations:

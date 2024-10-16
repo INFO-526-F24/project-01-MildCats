@@ -1,11 +1,11 @@
 ---
-title: "Project Title"
+title: "Analyzing English Premier League Match Data"
 subtitle: "INFO 526 - Fall 2024 - Project 01"
 author: 
-  - name: "Team name"
+  - name: "MildCats"
     affiliations:
       - name: "School of Information, University of Arizona"
-description: "Project description"
+description: "Exploring the relationship between English Premier League match outcomes and secondary variables (weather, betting odds and rolling performance records)"
 format:
    html:
     code-tools: true
@@ -19,4 +19,8 @@ execute:
 
 ## Abstract
 
-Add project abstract here.
+This project focuses on analyzing and visualizing data from the English Premier League (soccer), covering the 2021-2023 seasons. Using match data as the core data-set, the analysis incorporates additional weather and betting odds data to explore various factors that may influence game outcomes.
+
+We aim to uncover patterns such as home ground advantage, the impact of weather on match results, and the relationship between pre-published betting odds and actual outcomes.
+
+The project prioritizes accessibility by presenting the findings in an engaging and easy-to-understand format for a wider audience.
