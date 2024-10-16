@@ -19,90 +19,146 @@ execute:
 ---
 
 ```{r}
-#| label: load-pkgs
+#| label: r-setup-load-pkgs
 #| message: false
-library(tidyverse)
-library(dplyr)
-library(readr)
+
+if (!require("pacman")) 
+  install.packages("pacman")
+
+# use this line for installing/loading
+pacman::p_load(here,
+               tidyverse,
+               dplyr,
+               readr)
 ```
 
 ## Introduction
 
-The English Premier League is consistently ranked as the most viewed sports league in the world. With widespread popularity and fanfare, the Premier League is an interesting subject to further explore using data methods, to uncover interesting patterns and phenomenon that fans may otherwise miss. Many fans also bet heavily on the outcome of matches, with the Premier League being one of the most attractive events for bettors. Thus, analyzing match data in sync with betting odds data, we may also find some interesting results that may be of relevance to fans who are risking money. After conducting data analysis, we aim to visualize and present it in an intriguing, yet easy to understand fashion, in order to make it accessible to a wide range of audience.
+The English Premier League is consistently ranked as the most viewed sports league in the world. With widespread popularity and fanfare, the Premier League is an interesting subject to further explore using data methods, to uncover interesting patterns and phenomenon that fans may otherwise miss.
+
+Many fans also bet heavily on the outcome of matches, with the Premier League being one of the most attractive events for bettors. Thus, analyzing match data in sync with betting odds data, we may also find some interesting results that may be of relevance to fans who are risking money.
+
+After conducting data analysis, we aim to visualize and present it in an intriguing, yet easy to understand fashion, in order to make it accessible to a wide range of audience.
 
 ## Datasets
-The base of our data is formed by the Premier League match dataset for the years 2021 to 2022. This dataset is extended to cover matches from years []. Then the longer dataset is augmented with the weather data during the Premier League schedule. Further, the entire schedule is supplemented with data of betting odds retrieved from popular betting site []. 
 
-### Weather dataset
+### Match Data
+
+The core data-set for our project is the the [Premier League Match Data](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-04-04/readme.md) for the 2021-22 season. This data-set will be [extended](https://www.kaggle.com/datasets/evangower/premier-league-2022-2023) to cover matches from years 2022-2023.
+
+As sports fans, we often find ourselves absorbed by the adrenaline and pace of the game, but taking a broader, objective approach can help us answer "difficult" questions like -
+
+-   Why did my team lose this game (that we were sure we would win)
+
+-   Is there such a thing as home ground advantage? Do some teams objectively and quantifiably perform better on home grounds, or are there teams which are agnostic to this?
+
+Hence, this data-set stood out in it's ability to be an interesting case-study towards building an engaging project, making it our choice for this project.
+
+We currently have the unprocessed, uncombined data-set as *soccer22-23.csv* in our raw data directory, but this will be merged to form a *soccer21-23.csv* dataset (a total of **760** rows).
+
+```{r}
+#| label: load-match-data
+#| message: false
+
+match_data <- read.csv(here("data", "raw_data", "soccer21-22.csv"))
+glimpse(match_data)
+```
+
+### Augmenting Datasets
+
+Match data is planned to be supplemented with publicly sourced weather and betting odds data to form the cumulative, unprocessed raw data.
+
+#### Weather Data
+
+This data was chosen as a potential augmentation to the match data as weather events significantly affect the playing conditions. This can influence results of the game, often in an unexpected way.
+
+Some teams might have strategies, or players that do well in wet conditions that slow down the overall pace of the game, and having this data in our analysis would help us test various hypothesis that can form the crux of our research questions.
+
+**Note** - The city-wise data will be combined/alternatively sourced to form a master weather data-set.
 
 ```{r}
 #| label: load-dataset-weather
 #| message: false
+
+weather_leeds <- read.csv(here("data", "raw_data", "weather21-22", "Leeds.csv"))
+glimpse(weather_leeds)
 ```
 
-#### Source
+#### Betting Odds Data
 
-Data for the weather during matches has been retrieved from the weather data vendor [Visual Crossing](https://www.visualcrossing.com/weather-data). This data provider hosts extensive weather data spanning a wide range of global geographical locations and going back several decades. This provider compiles data by collecting raw measurements from observation stations located all across the world. Given that the locations of interest for us are all major cities in the U.K., we can be quite confident in the quality of this data.
+This data-set was included as part of our analysis to answer a few key questions -
 
-#### Collection method
+-   Is there a way to link pre-published betting odds with the outcome of league games?
 
-The data collection process began by creating an account on Visual Crossing. The platform aggregates weather data from multiple reliable sources, including weather stations, satellites, and meteorological organizations.The locations where the matches took place were entered to retrieve the corresponding weather data. The date ranges were specified to match the days when the games occurred. After setting these parameters, the metrics were finalized, with temperature in Celsius and distance in kilometers. These variables are critical for understanding match conditions and performance. Additionally, the platform offered the option to select either daily or hourly weather data; the daily option was chosen. The query was then executed, and the CSV file was downloaded. Finally, the date range was cross-checked with the actual match dates to ensure accuracy.    
-#### Overview
+-   How often are these odds pointing in the wrong direction (e.g. Underdog wins, favorite loses)
+
+-   Is there a way to quantify and link a team's odds progression through the season to their performance
+
+Finally, we wanted to check if it is the "house" (read bookmaker) always wins? Or is there a way for a sharp (seasoned sports bettor) to outsmart the book.
+
+**Note** - The betting odds data from the 2 seasons (21-22, 22-23) will be combined to form a master betting odds dataset (760 rows)
 
 ```{r}
-#| label: glimpse-of-weather-data
+#| label: load-dataset-betodds
 #| message: false
-options(readr.show_col_types = FALSE)
-weather_21_22_csv <- list.files(path="data/raw_data/weather 21-22", full.names = TRUE) %>% 
-  lapply(read_csv)
-weather_21_22 <- rbind(weather_21_22_csv, fill = TRUE)
-glimpse(weather_21_22)
-write.csv(weather_21_22, "data/raw_data/weather 21-22/full_21_22.csv")
+
+bet_odds <- read.csv(here("data", "raw_data", "betting_odds21-22.csv"))
+glimpse(bet_odds)
 ```
 
-#### Ethics
+#### Data Source and Ethical Considerations
 
-The weather data was collected through legal and legitimate means by using the Visual Crossing platform, by adhering to the platform's terms and conditions. Since there was a limit of 1000 record retrieval cap in a 24 hour period, the workload was divided among 6 team members. The data was not manipulated at any point, thus allowing transperency and clear documentation of the process. The data collected will solely be used for the intended purpose of this project.
+-   **Match Data**
 
-### Historical dataset
+    -   **Source** -
 
-```{r}
-#| label: load-dataset-historical
-#| message: false
-```
+        -   This data was sourced from [Evan Gower](https://www.kaggle.com/evangower) via [Kaggle](https://www.kaggle.com/datasets/evangower/premier-league-match-data) (originally referenced from the [tidytuesday list of datasets](https://github.com/rfordatascience/tidytuesday/tree/master/data/2023#readme))
 
-#### Source
+        -   The [extension](https://www.kaggle.com/datasets/evangower/premier-league-2022-2023) (to the 22-23 season) was also sourced from the same user
 
-#### Collection method
+    -   **Collection Method -**
 
-#### Overview
+        -   The provenance of the cleaned match data is from the [FootballData UK](https://www.football-data.co.uk/englandm.php) website.
 
-```{r}
-#| label: glimpse-of-historic-data
-#| message: false
-```
+        -   We could not identify explicitly how this organization collects data, but it seems that the incoming data stream relies on live match data from gambling websites/book-makers.
 
-#### Ethics
+    -   **Ethical Considerations -**
 
-### Betting dataset
+        -   The data on Kaggle is offered openly, but the copyright lies with the original authors (<https://www.football-data.co.uk/>)
 
-```{r}
-#| label: load-dataset-betting
-#| message: false
-```
+        -   Since the original author provides the data publicly, we are within our rights to use this data for a non-commercial use case i.e. our project.
 
-#### Source
+-   **Weather**
 
-#### Collection method
+    -   **Source** - Data for the weather during matches has been retrieved from the weather data vendor [Visual Crossing](https://www.visualcrossing.com/weather-data).
 
-#### Overview
+    -   **Collection Method -** This provider compiles data by collecting raw measurements from observation stations located all across the world. Given that the locations of interest for us are all major cities in the U.K., we can be quite confident in the quality of this data.
 
-```{r}
-#| label: glimpse-of-betting-data
-#| message: false
-```
+    -   **Ethical Considerations -**
 
-#### Ethics
+        -    The weather data was collected through legal and legitimate means by using the Visual Crossing platform, by adhering to the platform's terms and conditions.
+
+        -   Since there was a limit of 1000 record retrieval cap in a 24 hour period, the workload was divided among 6 team members.
+
+        -   The data was not manipulated at any point, thus allowing transperency and clear documentation of the process.
+
+        -   The data collected will solely be used for the intended purpose of this project.
+
+-   **Betting Odds**
+
+    -   **Source** -
+
+        -   This data was sourced from [FootballData UK](https://www.football-data.co.uk/englandm.php)
+
+        -   Co-incidentally, this is also the primary data source for our cleaned match data
+
+    -   **Collection Method -**
+
+        -   We could not identify explicitly how this organization collects data, but it seems that the incoming data stream relies on live match data from gambling websites/book-makers.
+
+    -   **Ethical Considerations -**
+
+        -   Since the original author provides the data publicly, we are within our rights to use this data for a non-commercial use case i.e. our project. No ethical conflicts or ambiguity here.
 
 ## Research Questions
 
