@@ -5,7 +5,7 @@ author:
   - name: "Mildcats"
     affiliations:
       - name: "School of Information, University of Arizona"
-description: "Analysis and visualization of data relevant to the Premier League"
+description: "Project proposal outlining the objective, datasets, research questions and plan"
 format:
   html:
     code-tools: true
