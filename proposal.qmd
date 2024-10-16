@@ -54,6 +54,19 @@ As sports fans, we often find ourselves absorbed by the adrenaline and pace of t
 
 Hence, this data-set stood out in it's ability to be an interesting case-study towards building an engaging project, making it our choice for this project.
 
+#### Data Description
+
+| **Column Name** | **Description**                                   | **Usage in Project**                                |
+|------------------|---------------------------|---------------------------|
+| **Date**        | Date of the match                                 | Used to align matches with weather and betting data |
+| **HomeTeam**    | Name of the home team                             | Analyze home team performance                       |
+| **AwayTeam**    | Name of the away team                             | Compare with home team performance                  |
+| **FTHG**        | Full-time home goals                              | Key for match outcome analysis                      |
+| **FTAG**        | Full-time away goals                              | Key for match outcome analysis                      |
+| **FTR**         | Full-time result (H=Home Win, D=Draw, A=Away Win) | Evaluate outcome trends and betting accuracy        |
+| **HS**          | Home team shots                                   | Analyze team performance metrics                    |
+| **AS**          | Away team shots                                   | Analyze team performance metrics                    |
+
 We currently have the unprocessed, uncombined data-set as *soccer22-23.csv* in our raw data directory, but this will be merged to form a *soccer21-23.csv* dataset (a total of **760** rows).
 
 ```{r}
@@ -73,6 +86,18 @@ Match data is planned to be supplemented with publicly sourced weather and betti
 This data was chosen as a potential augmentation to the match data as weather events significantly affect the playing conditions. This can influence results of the game, often in an unexpected way.
 
 Some teams might have strategies, or players that do well in wet conditions that slow down the overall pace of the game, and having this data in our analysis would help us test various hypothesis that can form the crux of our research questions.
+
+##### Data Description
+
+| **Column Name** | **Description**                  | **Usage in Project**                                         |
+|------------------|---------------------------|---------------------------|
+| **datetime**    | Timestamp of weather data        | Align weather with match date                                |
+| **tempmax**     | Maximum temperature on match day | Analyze impact of temperature on match outcomes              |
+| **tempmin**     | Minimum temperature on match day | Analyze impact of temperature fluctuations                   |
+| **precip**      | Precipitation (in mm)            | Evaluate how weather impacts match performance               |
+| **windspeed**   | Speed of wind on match day       | Analyze influence of wind on match results                   |
+| **humidity**    | Humidity on match day            | Investigate correlations between humidity and match outcomes |
+| **visibility**  | Visibility during match          | Explore effects of low visibility on performance             |
 
 **Note** - The city-wise data will be combined/alternatively sourced to form a master weather data-set.
 
@@ -96,7 +121,19 @@ This data-set was included as part of our analysis to answer a few key questions
 
 Finally, we wanted to check if it is the "house" (read bookmaker) always wins? Or is there a way for a sharp (seasoned sports bettor) to outsmart the book.
 
-**Note** - The betting odds data from the 2 seasons (21-22, 22-23) will be combined to form a master betting odds dataset (760 rows)
+##### Data Descripton
+
+| **Column Name** | **Description**                | **Usage in Project**                                            |
+|----------------|----------------------------|----------------------------|
+| **HomeTeam**    | Name of the home team          | Compare betting odds to actual results                          |
+| **AwayTeam**    | Name of the away team          | Compare betting odds to actual results                          |
+| **B365H**       | Bet365 odds for home team win  | Analyze accuracy of betting odds                                |
+| **B365D**       | Bet365 odds for a draw         | Analyze odds dynamics for tied matches                          |
+| **B365A**       | Bet365 odds for away team win  | Compare odds with actual match outcome                          |
+| **MaxH**        | Maximum odds for home team win | Track the highest betting odds and its correlation with results |
+| **MaxA**        | Maximum odds for away team win | Track the highest betting odds and its correlation with results |
+
+**Note** - The betting odds data from the 2 seasons (21-22, 22-23) will be combined to form a master betting odds data-set (760 rows)
 
 ```{r}
 #| label: load-dataset-betodds
@@ -162,8 +199,57 @@ glimpse(bet_odds)
 
 ## Research Questions
 
-The two questions you want to answer.
+-   **How do extreme pre-match weather conditions (such as heavy rain, strong winds, or cold temperatures) influence the likelihood of surprising outcomes, such as underdog victories, and how do betting odds before the match reflect these potential surprises compared to historical odds for the same teams?**
+
+    -   **Rationale**:
+
+        -   We aim to explore if extreme weather conditions lead to more unexpected outcomes, such as the underdogs (as per the pre match betting line) winning.
+
+        -   It also examines how pre-match betting odds account for these potential disruptions, by comparing them to odds for the same teams in previous matches under normal conditions.
+
+    -   **Datasets involved**:
+
+        -   Match data
+
+        -   Weather data
+
+        -   Pre-match betting odds.
+
+-   **Is there a quantifiable home team advantage? And is this reflected in the pre-match betting odds?**
+
+    -   **Rationale -**
+
+        -   We aim to trace whether there is a significant uptick in a team's perceived performance when they are playing on their home ground
+
+        -   For similarly ranked teams, with similar records, do their betting odds reflect a perceived advantage when playing at home vs playing away?
+
+        -   If the odds are indicative of this advantage, how often does this translate to the actual result
+
+    -   **Datasets involved**:
+
+        -   Match data
+
+        -   Pre-match betting odds.
+
+-   **How accurate are the pre match betting odds?**
+
+    -   **Rationale -**
+
+        -   We aim to perform a simple accuracy analysis of pre match betting odds on the match outcome
+
+        -   We aim to track the sensitivity of a team's rolling performance to the betting odds essentially tracking whether there is a recency bias built into betting odds
+
+    -   **Datasets involved**:
+
+        -   Match data
+
+        -   Pre-match betting odds.
 
 ## Analysis plan
 
--   A plan for answering each of the questions including the variables involved, variables to be created (if any), external data to be merged in (if any).
+-   Before we begin the analysis, the following pre-processing steps need to be performed -
+    -   **Extending Match Data** - We need to merge the match data from 21-22 with 22-23 seasons to give us a parent match data-set
+    -   **Flattening and Normalizing Weather Data -** Our weather data is currently city-wise, we need to aggregate this into a single data-set, and create a *foreign key* or identifier which will help us join it with the match data
+        -   Additional statistical metrics might need to be calculated - Average Temperature, Precipitation etc.
+    -   **Betting Odds Data** - Since none of us have experience with sports betting, we need to understand and isolate the important data points vis-a-vis bookmaking and betting odds and merge them into the match data-set.
+-   More details on the analysis plan shall be added here as the work progresses.
