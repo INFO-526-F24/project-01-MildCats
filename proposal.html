@@ -4833,6 +4833,74 @@ vertical-align: -.125em;
 <li><p>Is there such a thing as home ground advantage? Do some teams objectively and quantifiably perform better on home grounds, or are there teams which are agnostic to this?</p></li>
 </ul>
 <p>Hence, this data-set stood out in it’s ability to be an interesting case-study towards building an engaging project, making it our choice for this project.</p>
+<section id="data-description" class="level4">
+<h4 class="anchored" data-anchor-id="data-description">Data Description</h4>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 27%">
+<col style="width: 21%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Column Name</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Usage in Project</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Date</strong></td>
+<td>Date of the match</td>
+<td>Datetime</td>
+<td>Used to align matches with weather and betting data</td>
+</tr>
+<tr class="even">
+<td><strong>HomeTeam</strong></td>
+<td>Name of the home team</td>
+<td>Categorical</td>
+<td>Analyze home team performance</td>
+</tr>
+<tr class="odd">
+<td><strong>AwayTeam</strong></td>
+<td>Name of the away team</td>
+<td>Categorical</td>
+<td>Compare with home team performance</td>
+</tr>
+<tr class="even">
+<td><strong>FTHG</strong></td>
+<td>Full-time home goals</td>
+<td>Integer</td>
+<td>Key for match outcome analysis</td>
+</tr>
+<tr class="odd">
+<td><strong>FTAG</strong></td>
+<td>Full-time away goals</td>
+<td>Integer</td>
+<td>Key for match outcome analysis</td>
+</tr>
+<tr class="even">
+<td><strong>FTR</strong></td>
+<td>Full-time result (H=Home Win, D=Draw, A=Away Win)</td>
+<td>Categorical</td>
+<td>Evaluate outcome trends and betting accuracy</td>
+</tr>
+<tr class="odd">
+<td><strong>HS</strong></td>
+<td>Home team shots</td>
+<td>Integer</td>
+<td>Analyze team performance metrics</td>
+</tr>
+<tr class="even">
+<td><strong>AS</strong></td>
+<td>Away team shots</td>
+<td>Integer</td>
+<td>Analyze team performance metrics</td>
+</tr>
+</tbody>
+</table>
 <p>We currently have the unprocessed, uncombined data-set as <em>soccer22-23.csv</em> in our raw data directory, but this will be merged to form a <em>soccer21-23.csv</em> dataset (a total of <strong>760</strong> rows).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>match_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;soccer21-22.csv&quot;</span>))</span>
@@ -4865,6 +4933,7 @@ $ AR       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 </div>
 </div>
 </section>
+</section>
 <section id="augmenting-datasets" class="level3">
 <h3 class="anchored" data-anchor-id="augmenting-datasets">Augmenting Datasets</h3>
 <p>Match data is planned to be supplemented with publicly sourced weather and betting odds data to form the cumulative, unprocessed raw data.</p>
@@ -4872,6 +4941,68 @@ $ AR       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <h4 class="anchored" data-anchor-id="weather-data">Weather Data</h4>
 <p>This data was chosen as a potential augmentation to the match data as weather events significantly affect the playing conditions. This can influence results of the game, often in an unexpected way.</p>
 <p>Some teams might have strategies, or players that do well in wet conditions that slow down the overall pace of the game, and having this data in our analysis would help us test various hypothesis that can form the crux of our research questions.</p>
+<section id="data-description-1" class="level5">
+<h5 class="anchored" data-anchor-id="data-description-1">Data Description</h5>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 30%">
+<col style="width: 19%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Column Name</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Usage in Project</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>datetime</strong></td>
+<td>Timestamp of weather data</td>
+<td>Datetime</td>
+<td>Align weather with match date</td>
+</tr>
+<tr class="even">
+<td><strong>tempmax</strong></td>
+<td>Maximum temperature on match day</td>
+<td>Float</td>
+<td>Analyze impact of temperature on match outcomes</td>
+</tr>
+<tr class="odd">
+<td><strong>tempmin</strong></td>
+<td>Minimum temperature on match day</td>
+<td>Float</td>
+<td>Analyze impact of temperature fluctuations</td>
+</tr>
+<tr class="even">
+<td><strong>precip</strong></td>
+<td>Precipitation (in mm)</td>
+<td>Float</td>
+<td>Evaluate how weather impacts match performance</td>
+</tr>
+<tr class="odd">
+<td><strong>windspeed</strong></td>
+<td>Speed of wind on match day</td>
+<td>Float</td>
+<td>Analyze influence of wind on match results</td>
+</tr>
+<tr class="even">
+<td><strong>humidity</strong></td>
+<td>Humidity on match day</td>
+<td>Float</td>
+<td>Investigate correlations between humidity and match outcomes</td>
+</tr>
+<tr class="odd">
+<td><strong>visibility</strong></td>
+<td>Visibility during match</td>
+<td>Float</td>
+<td>Explore effects of low visibility on performance</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Note</strong> - The city-wise data will be combined/alternatively sourced to form a master weather data-set.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>weather_leeds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;weather21-22&quot;</span>, <span class="st">&quot;Leeds.csv&quot;</span>))</span>
@@ -4915,6 +5046,7 @@ $ stations         &lt;chr&gt; &quot;03346099999,F5682,F4675,03344099999,F1692,0
 </div>
 </div>
 </section>
+</section>
 <section id="betting-odds-data" class="level4">
 <h4 class="anchored" data-anchor-id="betting-odds-data">Betting Odds Data</h4>
 <p>This data-set was included as part of our analysis to answer a few key questions -</p>
@@ -4924,7 +5056,69 @@ $ stations         &lt;chr&gt; &quot;03346099999,F5682,F4675,03344099999,F1692,0
 <li><p>Is there a way to quantify and link a team’s odds progression through the season to their performance</p></li>
 </ul>
 <p>Finally, we wanted to check if it is the “house” (read bookmaker) always wins? Or is there a way for a sharp (seasoned sports bettor) to outsmart the book.</p>
-<p><strong>Note</strong> - The betting odds data from the 2 seasons (21-22, 22-23) will be combined to form a master betting odds dataset (760 rows)</p>
+<section id="data-descripton" class="level5">
+<h5 class="anchored" data-anchor-id="data-descripton">Data Descripton</h5>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 30%">
+<col style="width: 19%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Column Name</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Usage in Project</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>HomeTeam</strong></td>
+<td>Name of the home team</td>
+<td>Categorical</td>
+<td>Compare betting odds to actual results</td>
+</tr>
+<tr class="even">
+<td><strong>AwayTeam</strong></td>
+<td>Name of the away team</td>
+<td>Categorical</td>
+<td>Compare betting odds to actual results</td>
+</tr>
+<tr class="odd">
+<td><strong>B365H</strong></td>
+<td>Bet365 odds for home team win</td>
+<td>Float</td>
+<td>Analyze accuracy of betting odds</td>
+</tr>
+<tr class="even">
+<td><strong>B365D</strong></td>
+<td>Bet365 odds for a draw</td>
+<td>Float</td>
+<td>Analyze odds dynamics for tied matches</td>
+</tr>
+<tr class="odd">
+<td><strong>B365A</strong></td>
+<td>Bet365 odds for away team win</td>
+<td>Float</td>
+<td>Compare odds with actual match outcome</td>
+</tr>
+<tr class="even">
+<td><strong>MaxH</strong></td>
+<td>Maximum odds for home team win</td>
+<td>Float</td>
+<td>Track the highest betting odds and its correlation with results</td>
+</tr>
+<tr class="odd">
+<td><strong>MaxA</strong></td>
+<td>Maximum odds for away team win</td>
+<td>Float</td>
+<td>Track the highest betting odds and its correlation with results</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong> - The betting odds data from the 2 seasons (21-22, 22-23) will be combined to form a master betting odds data-set (760 rows)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>bet_odds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;betting_odds21-22.csv&quot;</span>))</span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="fu">glimpse</span>(bet_odds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -5040,6 +5234,7 @@ $ AvgCAHA     &lt;dbl&gt; 2.09, 1.79, 2.12, 1.82, 1.86, 1.89, 1.90, 2.01, 1.89, 
 </div>
 </div>
 </section>
+</section>
 <section id="data-source-and-ethical-considerations" class="level4">
 <h4 class="anchored" data-anchor-id="data-source-and-ethical-considerations">Data Source and Ethical Considerations</h4>
 <ul>
@@ -5095,12 +5290,63 @@ $ AvgCAHA     &lt;dbl&gt; 2.09, 1.79, 2.12, 1.82, 1.86, 1.89, 1.90, 2.01, 1.89, 
 </section>
 <section id="research-questions" class="level2">
 <h2 class="anchored" data-anchor-id="research-questions">Research Questions</h2>
-<p>The two questions you want to answer.</p>
+<ul>
+<li><p><strong>How do extreme pre-match weather conditions (such as heavy rain, strong winds, or cold temperatures) influence the likelihood of surprising outcomes, such as underdog victories, and how do betting odds before the match reflect these potential surprises compared to historical odds for the same teams?</strong></p>
+<ul>
+<li><p><strong>Rationale</strong>:</p>
+<ul>
+<li><p>We aim to explore if extreme weather conditions lead to more unexpected outcomes, such as the underdogs (as per the pre match betting line) winning.</p></li>
+<li><p>It also examines how pre-match betting odds account for these potential disruptions, by comparing them to odds for the same teams in previous matches under normal conditions.</p></li>
+</ul></li>
+<li><p><strong>Datasets involved</strong>:</p>
+<ul>
+<li><p>Match data</p></li>
+<li><p>Weather data</p></li>
+<li><p>Pre-match betting odds.</p></li>
+</ul></li>
+</ul></li>
+<li><p><strong>Is there a quantifiable home team advantage? And is this reflected in the pre-match betting odds?</strong></p>
+<ul>
+<li><p><strong>Rationale -</strong></p>
+<ul>
+<li><p>We aim to trace whether there is a significant uptick in a team’s perceived performance when they are playing on their home ground</p></li>
+<li><p>For similarly ranked teams, with similar records, do their betting odds reflect a perceived advantage when playing at home vs playing away?</p></li>
+<li><p>If the odds are indicative of this advantage, how often does this translate to the actual result</p></li>
+</ul></li>
+<li><p><strong>Datasets involved</strong>:</p>
+<ul>
+<li><p>Match data</p></li>
+<li><p>Pre-match betting odds.</p></li>
+</ul></li>
+</ul></li>
+<li><p><strong>How accurate are the pre match betting odds?</strong></p>
+<ul>
+<li><p><strong>Rationale -</strong></p>
+<ul>
+<li><p>We aim to perform a simple accuracy analysis of pre match betting odds on the match outcome</p></li>
+<li><p>We aim to track the sensitivity of a team’s rolling performance to the betting odds essentially tracking whether there is a recency bias built into betting odds</p></li>
+</ul></li>
+<li><p><strong>Datasets involved</strong>:</p>
+<ul>
+<li><p>Match data</p></li>
+<li><p>Pre-match betting odds.</p></li>
+</ul></li>
+</ul></li>
+</ul>
 </section>
 <section id="analysis-plan" class="level2">
 <h2 class="anchored" data-anchor-id="analysis-plan">Analysis plan</h2>
 <ul>
-<li>A plan for answering each of the questions including the variables involved, variables to be created (if any), external data to be merged in (if any).</li>
+<li>Before we begin the analysis, the following pre-processing steps need to be performed -
+<ul>
+<li><strong>Extending Match Data</strong> - We need to merge the match data from 21-22 with 22-23 seasons to give us a parent match data-set</li>
+<li><strong>Flattening and Normalizing Weather Data -</strong> Our weather data is currently city-wise, we need to aggregate this into a single data-set, and create a <em>foreign key</em> or identifier which will help us join it with the match data
+<ul>
+<li>Additional statistical metrics might need to be calculated - Average Temperature, Precipitation etc.</li>
+</ul></li>
+<li><strong>Betting Odds Data</strong> - Since none of us have experience with sports betting, we need to understand and isolate the important data points vis-a-vis bookmaking and betting odds and merge them into the match data-set.</li>
+</ul></li>
+<li>More details on the analysis plan shall be added here as the work progresses.</li>
 </ul>
 
 
@@ -5808,119 +6054,205 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-56"><a href="#cb8-56"></a></span>
 <span id="cb8-57"><a href="#cb8-57"></a>Hence, this data-set stood out in it&#39;s ability to be an interesting case-study towards building an engaging project, making it our choice for this project.</span>
 <span id="cb8-58"><a href="#cb8-58"></a></span>
-<span id="cb8-59"><a href="#cb8-59"></a>We currently have the unprocessed, uncombined data-set as *soccer22-23.csv* in our raw data directory, but this will be merged to form a *soccer21-23.csv* dataset (a total of **760** rows).</span>
+<span id="cb8-59"><a href="#cb8-59"></a><span class="fu">#### Data Description</span></span>
 <span id="cb8-60"><a href="#cb8-60"></a></span>
-<span id="cb8-63"><a href="#cb8-63"></a><span class="in">```{r}</span></span>
-<span id="cb8-64"><a href="#cb8-64"></a><span class="co">#| label: load-match-data</span></span>
-<span id="cb8-65"><a href="#cb8-65"></a><span class="co">#| message: false</span></span>
-<span id="cb8-66"><a href="#cb8-66"></a></span>
-<span id="cb8-67"><a href="#cb8-67"></a>match_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;soccer21-22.csv&quot;</span>))</span>
-<span id="cb8-68"><a href="#cb8-68"></a><span class="fu">glimpse</span>(match_data)</span>
-<span id="cb8-69"><a href="#cb8-69"></a><span class="in">```</span></span>
-<span id="cb8-70"><a href="#cb8-70"></a></span>
-<span id="cb8-71"><a href="#cb8-71"></a><span class="fu">### Augmenting Datasets</span></span>
-<span id="cb8-72"><a href="#cb8-72"></a></span>
-<span id="cb8-73"><a href="#cb8-73"></a>Match data is planned to be supplemented with publicly sourced weather and betting odds data to form the cumulative, unprocessed raw data.</span>
-<span id="cb8-74"><a href="#cb8-74"></a></span>
-<span id="cb8-75"><a href="#cb8-75"></a><span class="fu">#### Weather Data</span></span>
-<span id="cb8-76"><a href="#cb8-76"></a></span>
-<span id="cb8-77"><a href="#cb8-77"></a>This data was chosen as a potential augmentation to the match data as weather events significantly affect the playing conditions. This can influence results of the game, often in an unexpected way.</span>
-<span id="cb8-78"><a href="#cb8-78"></a></span>
-<span id="cb8-79"><a href="#cb8-79"></a>Some teams might have strategies, or players that do well in wet conditions that slow down the overall pace of the game, and having this data in our analysis would help us test various hypothesis that can form the crux of our research questions.</span>
-<span id="cb8-80"><a href="#cb8-80"></a></span>
-<span id="cb8-81"><a href="#cb8-81"></a>**Note** - The city-wise data will be combined/alternatively sourced to form a master weather data-set.</span>
-<span id="cb8-82"><a href="#cb8-82"></a></span>
-<span id="cb8-85"><a href="#cb8-85"></a><span class="in">```{r}</span></span>
-<span id="cb8-86"><a href="#cb8-86"></a><span class="co">#| label: load-dataset-weather</span></span>
-<span id="cb8-87"><a href="#cb8-87"></a><span class="co">#| message: false</span></span>
-<span id="cb8-88"><a href="#cb8-88"></a></span>
-<span id="cb8-89"><a href="#cb8-89"></a>weather_leeds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;weather21-22&quot;</span>, <span class="st">&quot;Leeds.csv&quot;</span>))</span>
-<span id="cb8-90"><a href="#cb8-90"></a><span class="fu">glimpse</span>(weather_leeds)</span>
-<span id="cb8-91"><a href="#cb8-91"></a><span class="in">```</span></span>
-<span id="cb8-92"><a href="#cb8-92"></a></span>
-<span id="cb8-93"><a href="#cb8-93"></a><span class="fu">#### Betting Odds Data</span></span>
-<span id="cb8-94"><a href="#cb8-94"></a></span>
-<span id="cb8-95"><a href="#cb8-95"></a>This data-set was included as part of our analysis to answer a few key questions -</span>
-<span id="cb8-96"><a href="#cb8-96"></a></span>
-<span id="cb8-97"><a href="#cb8-97"></a><span class="ss">-   </span>Is there a way to link pre-published betting odds with the outcome of league games?</span>
-<span id="cb8-98"><a href="#cb8-98"></a></span>
-<span id="cb8-99"><a href="#cb8-99"></a><span class="ss">-   </span>How often are these odds pointing in the wrong direction (e.g. Underdog wins, favorite loses)</span>
-<span id="cb8-100"><a href="#cb8-100"></a></span>
-<span id="cb8-101"><a href="#cb8-101"></a><span class="ss">-   </span>Is there a way to quantify and link a team&#39;s odds progression through the season to their performance</span>
-<span id="cb8-102"><a href="#cb8-102"></a></span>
-<span id="cb8-103"><a href="#cb8-103"></a>Finally, we wanted to check if it is the &quot;house&quot; (read bookmaker) always wins? Or is there a way for a sharp (seasoned sports bettor) to outsmart the book.</span>
-<span id="cb8-104"><a href="#cb8-104"></a></span>
-<span id="cb8-105"><a href="#cb8-105"></a>**Note** - The betting odds data from the 2 seasons (21-22, 22-23) will be combined to form a master betting odds dataset (760 rows)</span>
-<span id="cb8-106"><a href="#cb8-106"></a></span>
-<span id="cb8-109"><a href="#cb8-109"></a><span class="in">```{r}</span></span>
-<span id="cb8-110"><a href="#cb8-110"></a><span class="co">#| label: load-dataset-betodds</span></span>
-<span id="cb8-111"><a href="#cb8-111"></a><span class="co">#| message: false</span></span>
-<span id="cb8-112"><a href="#cb8-112"></a></span>
-<span id="cb8-113"><a href="#cb8-113"></a>bet_odds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;betting_odds21-22.csv&quot;</span>))</span>
-<span id="cb8-114"><a href="#cb8-114"></a><span class="fu">glimpse</span>(bet_odds)</span>
-<span id="cb8-115"><a href="#cb8-115"></a><span class="in">```</span></span>
-<span id="cb8-116"><a href="#cb8-116"></a></span>
-<span id="cb8-117"><a href="#cb8-117"></a><span class="fu">#### Data Source and Ethical Considerations</span></span>
-<span id="cb8-118"><a href="#cb8-118"></a></span>
-<span id="cb8-119"><a href="#cb8-119"></a><span class="ss">-   </span>**Match Data**</span>
-<span id="cb8-120"><a href="#cb8-120"></a></span>
-<span id="cb8-121"><a href="#cb8-121"></a><span class="ss">    -   </span>**Source** -</span>
-<span id="cb8-122"><a href="#cb8-122"></a></span>
-<span id="cb8-123"><a href="#cb8-123"></a><span class="ss">        -   </span>This data was sourced from <span class="co">[</span><span class="ot">Evan Gower</span><span class="co">](https://www.kaggle.com/evangower)</span> via <span class="co">[</span><span class="ot">Kaggle</span><span class="co">](https://www.kaggle.com/datasets/evangower/premier-league-match-data)</span> (originally referenced from the <span class="co">[</span><span class="ot">tidytuesday list of datasets</span><span class="co">](https://github.com/rfordatascience/tidytuesday/tree/master/data/2023#readme)</span>)</span>
-<span id="cb8-124"><a href="#cb8-124"></a></span>
-<span id="cb8-125"><a href="#cb8-125"></a><span class="ss">        -   </span>The <span class="co">[</span><span class="ot">extension</span><span class="co">](https://www.kaggle.com/datasets/evangower/premier-league-2022-2023)</span> (to the 22-23 season) was also sourced from the same user</span>
-<span id="cb8-126"><a href="#cb8-126"></a></span>
-<span id="cb8-127"><a href="#cb8-127"></a><span class="ss">    -   </span>**Collection Method -**</span>
-<span id="cb8-128"><a href="#cb8-128"></a></span>
-<span id="cb8-129"><a href="#cb8-129"></a><span class="ss">        -   </span>The provenance of the cleaned match data is from the <span class="co">[</span><span class="ot">FootballData UK</span><span class="co">](https://www.football-data.co.uk/englandm.php)</span> website.</span>
-<span id="cb8-130"><a href="#cb8-130"></a></span>
-<span id="cb8-131"><a href="#cb8-131"></a><span class="ss">        -   </span>We could not identify explicitly how this organization collects data, but it seems that the incoming data stream relies on live match data from gambling websites/book-makers.</span>
-<span id="cb8-132"><a href="#cb8-132"></a></span>
-<span id="cb8-133"><a href="#cb8-133"></a><span class="ss">    -   </span>**Ethical Considerations -**</span>
-<span id="cb8-134"><a href="#cb8-134"></a></span>
-<span id="cb8-135"><a href="#cb8-135"></a><span class="ss">        -   </span>The data on Kaggle is offered openly, but the copyright lies with the original authors (<span class="ot">&lt;https://www.football-data.co.uk/&gt;</span>)</span>
-<span id="cb8-136"><a href="#cb8-136"></a></span>
-<span id="cb8-137"><a href="#cb8-137"></a><span class="ss">        -   </span>Since the original author provides the data publicly, we are within our rights to use this data for a non-commercial use case i.e. our project.</span>
-<span id="cb8-138"><a href="#cb8-138"></a></span>
-<span id="cb8-139"><a href="#cb8-139"></a><span class="ss">-   </span>**Weather**</span>
-<span id="cb8-140"><a href="#cb8-140"></a></span>
-<span id="cb8-141"><a href="#cb8-141"></a><span class="ss">    -   </span>**Source** - Data for the weather during matches has been retrieved from the weather data vendor <span class="co">[</span><span class="ot">Visual Crossing</span><span class="co">](https://www.visualcrossing.com/weather-data)</span>.</span>
-<span id="cb8-142"><a href="#cb8-142"></a></span>
-<span id="cb8-143"><a href="#cb8-143"></a><span class="ss">    -   </span>**Collection Method -** This provider compiles data by collecting raw measurements from observation stations located all across the world. Given that the locations of interest for us are all major cities in the U.K., we can be quite confident in the quality of this data.</span>
-<span id="cb8-144"><a href="#cb8-144"></a></span>
-<span id="cb8-145"><a href="#cb8-145"></a><span class="ss">    -   </span>**Ethical Considerations -**</span>
-<span id="cb8-146"><a href="#cb8-146"></a></span>
-<span id="cb8-147"><a href="#cb8-147"></a><span class="ss">        -   </span>The weather data was collected through legal and legitimate means by using the Visual Crossing platform, by adhering to the platform&#39;s terms and conditions.</span>
-<span id="cb8-148"><a href="#cb8-148"></a></span>
-<span id="cb8-149"><a href="#cb8-149"></a><span class="ss">        -   </span>Since there was a limit of 1000 record retrieval cap in a 24 hour period, the workload was divided among 6 team members.</span>
-<span id="cb8-150"><a href="#cb8-150"></a></span>
-<span id="cb8-151"><a href="#cb8-151"></a><span class="ss">        -   </span>The data was not manipulated at any point, thus allowing transperency and clear documentation of the process.</span>
-<span id="cb8-152"><a href="#cb8-152"></a></span>
-<span id="cb8-153"><a href="#cb8-153"></a><span class="ss">        -   </span>The data collected will solely be used for the intended purpose of this project.</span>
-<span id="cb8-154"><a href="#cb8-154"></a></span>
-<span id="cb8-155"><a href="#cb8-155"></a><span class="ss">-   </span>**Betting Odds**</span>
-<span id="cb8-156"><a href="#cb8-156"></a></span>
-<span id="cb8-157"><a href="#cb8-157"></a><span class="ss">    -   </span>**Source** -</span>
-<span id="cb8-158"><a href="#cb8-158"></a></span>
-<span id="cb8-159"><a href="#cb8-159"></a><span class="ss">        -   </span>This data was sourced from <span class="co">[</span><span class="ot">FootballData UK</span><span class="co">](https://www.football-data.co.uk/englandm.php)</span></span>
-<span id="cb8-160"><a href="#cb8-160"></a></span>
-<span id="cb8-161"><a href="#cb8-161"></a><span class="ss">        -   </span>Co-incidentally, this is also the primary data source for our cleaned match data</span>
-<span id="cb8-162"><a href="#cb8-162"></a></span>
-<span id="cb8-163"><a href="#cb8-163"></a><span class="ss">    -   </span>**Collection Method -**</span>
-<span id="cb8-164"><a href="#cb8-164"></a></span>
-<span id="cb8-165"><a href="#cb8-165"></a><span class="ss">        -   </span>We could not identify explicitly how this organization collects data, but it seems that the incoming data stream relies on live match data from gambling websites/book-makers.</span>
-<span id="cb8-166"><a href="#cb8-166"></a></span>
-<span id="cb8-167"><a href="#cb8-167"></a><span class="ss">    -   </span>**Ethical Considerations -**</span>
-<span id="cb8-168"><a href="#cb8-168"></a></span>
-<span id="cb8-169"><a href="#cb8-169"></a><span class="ss">        -   </span>Since the original author provides the data publicly, we are within our rights to use this data for a non-commercial use case i.e. our project. No ethical conflicts or ambiguity here.</span>
-<span id="cb8-170"><a href="#cb8-170"></a></span>
-<span id="cb8-171"><a href="#cb8-171"></a><span class="fu">## Research Questions</span></span>
-<span id="cb8-172"><a href="#cb8-172"></a></span>
-<span id="cb8-173"><a href="#cb8-173"></a>The two questions you want to answer.</span>
-<span id="cb8-174"><a href="#cb8-174"></a></span>
-<span id="cb8-175"><a href="#cb8-175"></a><span class="fu">## Analysis plan</span></span>
-<span id="cb8-176"><a href="#cb8-176"></a></span>
-<span id="cb8-177"><a href="#cb8-177"></a><span class="ss">-   </span>A plan for answering each of the questions including the variables involved, variables to be created (if any), external data to be merged in (if any).</span>
+<span id="cb8-61"><a href="#cb8-61"></a>| **Column Name** | **Description**                                   | **Type**    | **Usage in Project**                                |</span>
+<span id="cb8-62"><a href="#cb8-62"></a>|----------------|--------------------|----------------|---------------------|</span>
+<span id="cb8-63"><a href="#cb8-63"></a>| **Date**        | Date of the match                                 | Datetime    | Used to align matches with weather and betting data |</span>
+<span id="cb8-64"><a href="#cb8-64"></a>| **HomeTeam**    | Name of the home team                             | Categorical | Analyze home team performance                       |</span>
+<span id="cb8-65"><a href="#cb8-65"></a>| **AwayTeam**    | Name of the away team                             | Categorical | Compare with home team performance                  |</span>
+<span id="cb8-66"><a href="#cb8-66"></a>| **FTHG**        | Full-time home goals                              | Integer     | Key for match outcome analysis                      |</span>
+<span id="cb8-67"><a href="#cb8-67"></a>| **FTAG**        | Full-time away goals                              | Integer     | Key for match outcome analysis                      |</span>
+<span id="cb8-68"><a href="#cb8-68"></a>| **FTR**         | Full-time result (H=Home Win, D=Draw, A=Away Win) | Categorical | Evaluate outcome trends and betting accuracy        |</span>
+<span id="cb8-69"><a href="#cb8-69"></a>| **HS**          | Home team shots                                   | Integer     | Analyze team performance metrics                    |</span>
+<span id="cb8-70"><a href="#cb8-70"></a>| **AS**          | Away team shots                                   | Integer     | Analyze team performance metrics                    |</span>
+<span id="cb8-71"><a href="#cb8-71"></a></span>
+<span id="cb8-72"><a href="#cb8-72"></a>We currently have the unprocessed, uncombined data-set as *soccer22-23.csv* in our raw data directory, but this will be merged to form a *soccer21-23.csv* dataset (a total of **760** rows).</span>
+<span id="cb8-73"><a href="#cb8-73"></a></span>
+<span id="cb8-76"><a href="#cb8-76"></a><span class="in">```{r}</span></span>
+<span id="cb8-77"><a href="#cb8-77"></a><span class="co">#| label: load-match-data</span></span>
+<span id="cb8-78"><a href="#cb8-78"></a><span class="co">#| message: false</span></span>
+<span id="cb8-79"><a href="#cb8-79"></a></span>
+<span id="cb8-80"><a href="#cb8-80"></a>match_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;soccer21-22.csv&quot;</span>))</span>
+<span id="cb8-81"><a href="#cb8-81"></a><span class="fu">glimpse</span>(match_data)</span>
+<span id="cb8-82"><a href="#cb8-82"></a><span class="in">```</span></span>
+<span id="cb8-83"><a href="#cb8-83"></a></span>
+<span id="cb8-84"><a href="#cb8-84"></a><span class="fu">### Augmenting Datasets</span></span>
+<span id="cb8-85"><a href="#cb8-85"></a></span>
+<span id="cb8-86"><a href="#cb8-86"></a>Match data is planned to be supplemented with publicly sourced weather and betting odds data to form the cumulative, unprocessed raw data.</span>
+<span id="cb8-87"><a href="#cb8-87"></a></span>
+<span id="cb8-88"><a href="#cb8-88"></a><span class="fu">#### Weather Data</span></span>
+<span id="cb8-89"><a href="#cb8-89"></a></span>
+<span id="cb8-90"><a href="#cb8-90"></a>This data was chosen as a potential augmentation to the match data as weather events significantly affect the playing conditions. This can influence results of the game, often in an unexpected way.</span>
+<span id="cb8-91"><a href="#cb8-91"></a></span>
+<span id="cb8-92"><a href="#cb8-92"></a>Some teams might have strategies, or players that do well in wet conditions that slow down the overall pace of the game, and having this data in our analysis would help us test various hypothesis that can form the crux of our research questions.</span>
+<span id="cb8-93"><a href="#cb8-93"></a></span>
+<span id="cb8-94"><a href="#cb8-94"></a><span class="fu">##### Data Description</span></span>
+<span id="cb8-95"><a href="#cb8-95"></a></span>
+<span id="cb8-96"><a href="#cb8-96"></a>| **Column Name** | **Description**                  | **Type** | **Usage in Project**                                         |</span>
+<span id="cb8-97"><a href="#cb8-97"></a>|--------------|----------------------|--------------|-----------------------|</span>
+<span id="cb8-98"><a href="#cb8-98"></a>| **datetime**    | Timestamp of weather data        | Datetime | Align weather with match date                                |</span>
+<span id="cb8-99"><a href="#cb8-99"></a>| **tempmax**     | Maximum temperature on match day | Float    | Analyze impact of temperature on match outcomes              |</span>
+<span id="cb8-100"><a href="#cb8-100"></a>| **tempmin**     | Minimum temperature on match day | Float    | Analyze impact of temperature fluctuations                   |</span>
+<span id="cb8-101"><a href="#cb8-101"></a>| **precip**      | Precipitation (in mm)            | Float    | Evaluate how weather impacts match performance               |</span>
+<span id="cb8-102"><a href="#cb8-102"></a>| **windspeed**   | Speed of wind on match day       | Float    | Analyze influence of wind on match results                   |</span>
+<span id="cb8-103"><a href="#cb8-103"></a>| **humidity**    | Humidity on match day            | Float    | Investigate correlations between humidity and match outcomes |</span>
+<span id="cb8-104"><a href="#cb8-104"></a>| **visibility**  | Visibility during match          | Float    | Explore effects of low visibility on performance             |</span>
+<span id="cb8-105"><a href="#cb8-105"></a></span>
+<span id="cb8-106"><a href="#cb8-106"></a>**Note** - The city-wise data will be combined/alternatively sourced to form a master weather data-set.</span>
+<span id="cb8-107"><a href="#cb8-107"></a></span>
+<span id="cb8-110"><a href="#cb8-110"></a><span class="in">```{r}</span></span>
+<span id="cb8-111"><a href="#cb8-111"></a><span class="co">#| label: load-dataset-weather</span></span>
+<span id="cb8-112"><a href="#cb8-112"></a><span class="co">#| message: false</span></span>
+<span id="cb8-113"><a href="#cb8-113"></a></span>
+<span id="cb8-114"><a href="#cb8-114"></a>weather_leeds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;weather21-22&quot;</span>, <span class="st">&quot;Leeds.csv&quot;</span>))</span>
+<span id="cb8-115"><a href="#cb8-115"></a><span class="fu">glimpse</span>(weather_leeds)</span>
+<span id="cb8-116"><a href="#cb8-116"></a><span class="in">```</span></span>
+<span id="cb8-117"><a href="#cb8-117"></a></span>
+<span id="cb8-118"><a href="#cb8-118"></a><span class="fu">#### Betting Odds Data</span></span>
+<span id="cb8-119"><a href="#cb8-119"></a></span>
+<span id="cb8-120"><a href="#cb8-120"></a>This data-set was included as part of our analysis to answer a few key questions -</span>
+<span id="cb8-121"><a href="#cb8-121"></a></span>
+<span id="cb8-122"><a href="#cb8-122"></a><span class="ss">-   </span>Is there a way to link pre-published betting odds with the outcome of league games?</span>
+<span id="cb8-123"><a href="#cb8-123"></a></span>
+<span id="cb8-124"><a href="#cb8-124"></a><span class="ss">-   </span>How often are these odds pointing in the wrong direction (e.g. Underdog wins, favorite loses)</span>
+<span id="cb8-125"><a href="#cb8-125"></a></span>
+<span id="cb8-126"><a href="#cb8-126"></a><span class="ss">-   </span>Is there a way to quantify and link a team&#39;s odds progression through the season to their performance</span>
+<span id="cb8-127"><a href="#cb8-127"></a></span>
+<span id="cb8-128"><a href="#cb8-128"></a>Finally, we wanted to check if it is the &quot;house&quot; (read bookmaker) always wins? Or is there a way for a sharp (seasoned sports bettor) to outsmart the book.</span>
+<span id="cb8-129"><a href="#cb8-129"></a></span>
+<span id="cb8-130"><a href="#cb8-130"></a><span class="fu">##### Data Descripton</span></span>
+<span id="cb8-131"><a href="#cb8-131"></a></span>
+<span id="cb8-132"><a href="#cb8-132"></a>| **Column Name** | **Description**                | **Type**    | **Usage in Project**                                            |</span>
+<span id="cb8-133"><a href="#cb8-133"></a>|--------------|----------------------|--------------|-----------------------|</span>
+<span id="cb8-134"><a href="#cb8-134"></a>| **HomeTeam**    | Name of the home team          | Categorical | Compare betting odds to actual results                          |</span>
+<span id="cb8-135"><a href="#cb8-135"></a>| **AwayTeam**    | Name of the away team          | Categorical | Compare betting odds to actual results                          |</span>
+<span id="cb8-136"><a href="#cb8-136"></a>| **B365H**       | Bet365 odds for home team win  | Float       | Analyze accuracy of betting odds                                |</span>
+<span id="cb8-137"><a href="#cb8-137"></a>| **B365D**       | Bet365 odds for a draw         | Float       | Analyze odds dynamics for tied matches                          |</span>
+<span id="cb8-138"><a href="#cb8-138"></a>| **B365A**       | Bet365 odds for away team win  | Float       | Compare odds with actual match outcome                          |</span>
+<span id="cb8-139"><a href="#cb8-139"></a>| **MaxH**        | Maximum odds for home team win | Float       | Track the highest betting odds and its correlation with results |</span>
+<span id="cb8-140"><a href="#cb8-140"></a>| **MaxA**        | Maximum odds for away team win | Float       | Track the highest betting odds and its correlation with results |</span>
+<span id="cb8-141"><a href="#cb8-141"></a></span>
+<span id="cb8-142"><a href="#cb8-142"></a>**Note** - The betting odds data from the 2 seasons (21-22, 22-23) will be combined to form a master betting odds data-set (760 rows)</span>
+<span id="cb8-143"><a href="#cb8-143"></a></span>
+<span id="cb8-146"><a href="#cb8-146"></a><span class="in">```{r}</span></span>
+<span id="cb8-147"><a href="#cb8-147"></a><span class="co">#| label: load-dataset-betodds</span></span>
+<span id="cb8-148"><a href="#cb8-148"></a><span class="co">#| message: false</span></span>
+<span id="cb8-149"><a href="#cb8-149"></a></span>
+<span id="cb8-150"><a href="#cb8-150"></a>bet_odds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;betting_odds21-22.csv&quot;</span>))</span>
+<span id="cb8-151"><a href="#cb8-151"></a><span class="fu">glimpse</span>(bet_odds)</span>
+<span id="cb8-152"><a href="#cb8-152"></a><span class="in">```</span></span>
+<span id="cb8-153"><a href="#cb8-153"></a></span>
+<span id="cb8-154"><a href="#cb8-154"></a><span class="fu">#### Data Source and Ethical Considerations</span></span>
+<span id="cb8-155"><a href="#cb8-155"></a></span>
+<span id="cb8-156"><a href="#cb8-156"></a><span class="ss">-   </span>**Match Data**</span>
+<span id="cb8-157"><a href="#cb8-157"></a></span>
+<span id="cb8-158"><a href="#cb8-158"></a><span class="ss">    -   </span>**Source** -</span>
+<span id="cb8-159"><a href="#cb8-159"></a></span>
+<span id="cb8-160"><a href="#cb8-160"></a><span class="ss">        -   </span>This data was sourced from <span class="co">[</span><span class="ot">Evan Gower</span><span class="co">](https://www.kaggle.com/evangower)</span> via <span class="co">[</span><span class="ot">Kaggle</span><span class="co">](https://www.kaggle.com/datasets/evangower/premier-league-match-data)</span> (originally referenced from the <span class="co">[</span><span class="ot">tidytuesday list of datasets</span><span class="co">](https://github.com/rfordatascience/tidytuesday/tree/master/data/2023#readme)</span>)</span>
+<span id="cb8-161"><a href="#cb8-161"></a></span>
+<span id="cb8-162"><a href="#cb8-162"></a><span class="ss">        -   </span>The <span class="co">[</span><span class="ot">extension</span><span class="co">](https://www.kaggle.com/datasets/evangower/premier-league-2022-2023)</span> (to the 22-23 season) was also sourced from the same user</span>
+<span id="cb8-163"><a href="#cb8-163"></a></span>
+<span id="cb8-164"><a href="#cb8-164"></a><span class="ss">    -   </span>**Collection Method -**</span>
+<span id="cb8-165"><a href="#cb8-165"></a></span>
+<span id="cb8-166"><a href="#cb8-166"></a><span class="ss">        -   </span>The provenance of the cleaned match data is from the <span class="co">[</span><span class="ot">FootballData UK</span><span class="co">](https://www.football-data.co.uk/englandm.php)</span> website.</span>
+<span id="cb8-167"><a href="#cb8-167"></a></span>
+<span id="cb8-168"><a href="#cb8-168"></a><span class="ss">        -   </span>We could not identify explicitly how this organization collects data, but it seems that the incoming data stream relies on live match data from gambling websites/book-makers.</span>
+<span id="cb8-169"><a href="#cb8-169"></a></span>
+<span id="cb8-170"><a href="#cb8-170"></a><span class="ss">    -   </span>**Ethical Considerations -**</span>
+<span id="cb8-171"><a href="#cb8-171"></a></span>
+<span id="cb8-172"><a href="#cb8-172"></a><span class="ss">        -   </span>The data on Kaggle is offered openly, but the copyright lies with the original authors (<span class="ot">&lt;https://www.football-data.co.uk/&gt;</span>)</span>
+<span id="cb8-173"><a href="#cb8-173"></a></span>
+<span id="cb8-174"><a href="#cb8-174"></a><span class="ss">        -   </span>Since the original author provides the data publicly, we are within our rights to use this data for a non-commercial use case i.e. our project.</span>
+<span id="cb8-175"><a href="#cb8-175"></a></span>
+<span id="cb8-176"><a href="#cb8-176"></a><span class="ss">-   </span>**Weather**</span>
+<span id="cb8-177"><a href="#cb8-177"></a></span>
+<span id="cb8-178"><a href="#cb8-178"></a><span class="ss">    -   </span>**Source** - Data for the weather during matches has been retrieved from the weather data vendor <span class="co">[</span><span class="ot">Visual Crossing</span><span class="co">](https://www.visualcrossing.com/weather-data)</span>.</span>
+<span id="cb8-179"><a href="#cb8-179"></a></span>
+<span id="cb8-180"><a href="#cb8-180"></a><span class="ss">    -   </span>**Collection Method -** This provider compiles data by collecting raw measurements from observation stations located all across the world. Given that the locations of interest for us are all major cities in the U.K., we can be quite confident in the quality of this data.</span>
+<span id="cb8-181"><a href="#cb8-181"></a></span>
+<span id="cb8-182"><a href="#cb8-182"></a><span class="ss">    -   </span>**Ethical Considerations -**</span>
+<span id="cb8-183"><a href="#cb8-183"></a></span>
+<span id="cb8-184"><a href="#cb8-184"></a><span class="ss">        -   </span>The weather data was collected through legal and legitimate means by using the Visual Crossing platform, by adhering to the platform&#39;s terms and conditions.</span>
+<span id="cb8-185"><a href="#cb8-185"></a></span>
+<span id="cb8-186"><a href="#cb8-186"></a><span class="ss">        -   </span>Since there was a limit of 1000 record retrieval cap in a 24 hour period, the workload was divided among 6 team members.</span>
+<span id="cb8-187"><a href="#cb8-187"></a></span>
+<span id="cb8-188"><a href="#cb8-188"></a><span class="ss">        -   </span>The data was not manipulated at any point, thus allowing transperency and clear documentation of the process.</span>
+<span id="cb8-189"><a href="#cb8-189"></a></span>
+<span id="cb8-190"><a href="#cb8-190"></a><span class="ss">        -   </span>The data collected will solely be used for the intended purpose of this project.</span>
+<span id="cb8-191"><a href="#cb8-191"></a></span>
+<span id="cb8-192"><a href="#cb8-192"></a><span class="ss">-   </span>**Betting Odds**</span>
+<span id="cb8-193"><a href="#cb8-193"></a></span>
+<span id="cb8-194"><a href="#cb8-194"></a><span class="ss">    -   </span>**Source** -</span>
+<span id="cb8-195"><a href="#cb8-195"></a></span>
+<span id="cb8-196"><a href="#cb8-196"></a><span class="ss">        -   </span>This data was sourced from <span class="co">[</span><span class="ot">FootballData UK</span><span class="co">](https://www.football-data.co.uk/englandm.php)</span></span>
+<span id="cb8-197"><a href="#cb8-197"></a></span>
+<span id="cb8-198"><a href="#cb8-198"></a><span class="ss">        -   </span>Co-incidentally, this is also the primary data source for our cleaned match data</span>
+<span id="cb8-199"><a href="#cb8-199"></a></span>
+<span id="cb8-200"><a href="#cb8-200"></a><span class="ss">    -   </span>**Collection Method -**</span>
+<span id="cb8-201"><a href="#cb8-201"></a></span>
+<span id="cb8-202"><a href="#cb8-202"></a><span class="ss">        -   </span>We could not identify explicitly how this organization collects data, but it seems that the incoming data stream relies on live match data from gambling websites/book-makers.</span>
+<span id="cb8-203"><a href="#cb8-203"></a></span>
+<span id="cb8-204"><a href="#cb8-204"></a><span class="ss">    -   </span>**Ethical Considerations -**</span>
+<span id="cb8-205"><a href="#cb8-205"></a></span>
+<span id="cb8-206"><a href="#cb8-206"></a><span class="ss">        -   </span>Since the original author provides the data publicly, we are within our rights to use this data for a non-commercial use case i.e. our project. No ethical conflicts or ambiguity here.</span>
+<span id="cb8-207"><a href="#cb8-207"></a></span>
+<span id="cb8-208"><a href="#cb8-208"></a><span class="fu">## Research Questions</span></span>
+<span id="cb8-209"><a href="#cb8-209"></a></span>
+<span id="cb8-210"><a href="#cb8-210"></a><span class="ss">-   </span>**How do extreme pre-match weather conditions (such as heavy rain, strong winds, or cold temperatures) influence the likelihood of surprising outcomes, such as underdog victories, and how do betting odds before the match reflect these potential surprises compared to historical odds for the same teams?**</span>
+<span id="cb8-211"><a href="#cb8-211"></a></span>
+<span id="cb8-212"><a href="#cb8-212"></a><span class="ss">    -   </span>**Rationale**:</span>
+<span id="cb8-213"><a href="#cb8-213"></a></span>
+<span id="cb8-214"><a href="#cb8-214"></a><span class="ss">        -   </span>We aim to explore if extreme weather conditions lead to more unexpected outcomes, such as the underdogs (as per the pre match betting line) winning.</span>
+<span id="cb8-215"><a href="#cb8-215"></a></span>
+<span id="cb8-216"><a href="#cb8-216"></a><span class="ss">        -   </span>It also examines how pre-match betting odds account for these potential disruptions, by comparing them to odds for the same teams in previous matches under normal conditions.</span>
+<span id="cb8-217"><a href="#cb8-217"></a></span>
+<span id="cb8-218"><a href="#cb8-218"></a><span class="ss">    -   </span>**Datasets involved**:</span>
+<span id="cb8-219"><a href="#cb8-219"></a></span>
+<span id="cb8-220"><a href="#cb8-220"></a><span class="ss">        -   </span>Match data</span>
+<span id="cb8-221"><a href="#cb8-221"></a></span>
+<span id="cb8-222"><a href="#cb8-222"></a><span class="ss">        -   </span>Weather data</span>
+<span id="cb8-223"><a href="#cb8-223"></a></span>
+<span id="cb8-224"><a href="#cb8-224"></a><span class="ss">        -   </span>Pre-match betting odds.</span>
+<span id="cb8-225"><a href="#cb8-225"></a></span>
+<span id="cb8-226"><a href="#cb8-226"></a><span class="ss">-   </span>**Is there a quantifiable home team advantage? And is this reflected in the pre-match betting odds?**</span>
+<span id="cb8-227"><a href="#cb8-227"></a></span>
+<span id="cb8-228"><a href="#cb8-228"></a><span class="ss">    -   </span>**Rationale -**</span>
+<span id="cb8-229"><a href="#cb8-229"></a></span>
+<span id="cb8-230"><a href="#cb8-230"></a><span class="ss">        -   </span>We aim to trace whether there is a significant uptick in a team&#39;s perceived performance when they are playing on their home ground</span>
+<span id="cb8-231"><a href="#cb8-231"></a></span>
+<span id="cb8-232"><a href="#cb8-232"></a><span class="ss">        -   </span>For similarly ranked teams, with similar records, do their betting odds reflect a perceived advantage when playing at home vs playing away?</span>
+<span id="cb8-233"><a href="#cb8-233"></a></span>
+<span id="cb8-234"><a href="#cb8-234"></a><span class="ss">        -   </span>If the odds are indicative of this advantage, how often does this translate to the actual result</span>
+<span id="cb8-235"><a href="#cb8-235"></a></span>
+<span id="cb8-236"><a href="#cb8-236"></a><span class="ss">    -   </span>**Datasets involved**:</span>
+<span id="cb8-237"><a href="#cb8-237"></a></span>
+<span id="cb8-238"><a href="#cb8-238"></a><span class="ss">        -   </span>Match data</span>
+<span id="cb8-239"><a href="#cb8-239"></a></span>
+<span id="cb8-240"><a href="#cb8-240"></a><span class="ss">        -   </span>Pre-match betting odds.</span>
+<span id="cb8-241"><a href="#cb8-241"></a></span>
+<span id="cb8-242"><a href="#cb8-242"></a><span class="ss">-   </span>**How accurate are the pre match betting odds?**</span>
+<span id="cb8-243"><a href="#cb8-243"></a></span>
+<span id="cb8-244"><a href="#cb8-244"></a><span class="ss">    -   </span>**Rationale -**</span>
+<span id="cb8-245"><a href="#cb8-245"></a></span>
+<span id="cb8-246"><a href="#cb8-246"></a><span class="ss">        -   </span>We aim to perform a simple accuracy analysis of pre match betting odds on the match outcome</span>
+<span id="cb8-247"><a href="#cb8-247"></a></span>
+<span id="cb8-248"><a href="#cb8-248"></a><span class="ss">        -   </span>We aim to track the sensitivity of a team&#39;s rolling performance to the betting odds essentially tracking whether there is a recency bias built into betting odds</span>
+<span id="cb8-249"><a href="#cb8-249"></a></span>
+<span id="cb8-250"><a href="#cb8-250"></a><span class="ss">    -   </span>**Datasets involved**:</span>
+<span id="cb8-251"><a href="#cb8-251"></a></span>
+<span id="cb8-252"><a href="#cb8-252"></a><span class="ss">        -   </span>Match data</span>
+<span id="cb8-253"><a href="#cb8-253"></a></span>
+<span id="cb8-254"><a href="#cb8-254"></a><span class="ss">        -   </span>Pre-match betting odds.</span>
+<span id="cb8-255"><a href="#cb8-255"></a></span>
+<span id="cb8-256"><a href="#cb8-256"></a><span class="fu">## Analysis plan</span></span>
+<span id="cb8-257"><a href="#cb8-257"></a></span>
+<span id="cb8-258"><a href="#cb8-258"></a><span class="ss">-   </span>Before we begin the analysis, the following pre-processing steps need to be performed -</span>
+<span id="cb8-259"><a href="#cb8-259"></a><span class="ss">    -   </span>**Extending Match Data** - We need to merge the match data from 21-22 with 22-23 seasons to give us a parent match data-set</span>
+<span id="cb8-260"><a href="#cb8-260"></a><span class="ss">    -   </span>**Flattening and Normalizing Weather Data -** Our weather data is currently city-wise, we need to aggregate this into a single data-set, and create a *foreign key* or identifier which will help us join it with the match data</span>
+<span id="cb8-261"><a href="#cb8-261"></a><span class="ss">        -   </span>Additional statistical metrics might need to be calculated - Average Temperature, Precipitation etc.</span>
+<span id="cb8-262"><a href="#cb8-262"></a><span class="ss">    -   </span>**Betting Odds Data** - Since none of us have experience with sports betting, we need to understand and isolate the important data points vis-a-vis bookmaking and betting odds and merge them into the match data-set.</span>
+<span id="cb8-263"><a href="#cb8-263"></a><span class="ss">-   </span>More details on the analysis plan shall be added here as the work progresses.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
