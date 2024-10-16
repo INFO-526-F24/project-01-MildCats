@@ -51,6 +51,12 @@ Data for the weather during matches has been retrieved from the weather data ven
 ```{r}
 #| label: glimpse-of-weather-data
 #| message: false
+options(readr.show_col_types = FALSE)
+weather_21_22_csv <- list.files(path="data/raw_data/weather 21-22", full.names = TRUE) %>% 
+  lapply(read_csv)
+weather_21_22 <- rbind(weather_21_22_csv, fill = TRUE)
+glimpse(weather_21_22)
+write.csv(weather_21_22, "data/raw_data/weather 21-22/full_21_22.csv")
 ```
 
 #### Ethics
