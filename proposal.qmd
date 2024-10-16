@@ -1,11 +1,11 @@
 ---
-title: "Proposal title"
-subtitle: "Proposal"
+title: "Premier League Data Analysis"
+subtitle: "Years X-Y"
 author: 
-  - name: "Team Name"
+  - name: "Mildcats"
     affiliations:
       - name: "School of Information, University of Arizona"
-description: "Project description"
+description: "Analysis and visualization of data relevant to the Premier League"
 format:
   html:
     code-tools: true
@@ -22,20 +22,82 @@ execute:
 #| label: load-pkgs
 #| message: false
 library(tidyverse)
+library(dplyr)
+library(readr)
 ```
 
-## Dataset
+## Introduction
+
+The English Premier League is consistently ranked as the most viewed sports league in the world. With widespread popularity and fanfare, the Premier League is an interesting subject to further explore using data methods, to uncover interesting patterns and phenomenon that fans may otherwise miss. Many fans also bet heavily on the outcome of matches, with the Premier League being one of the most attractive events for bettors. Thus, analyzing match data in sync with betting odds data, we may also find some interesting results that may be of relevance to fans who are risking money. After conducting data analysis, we aim to visualize and present it in an intriguing, yet easy to understand fashion, in order to make it accessible to a wide range of audience.
+
+## Datasets
+The base of our data is formed by the Premier League match dataset for the years 2021 to 2022. This dataset is extended to cover matches from years []. Then the longer dataset is augmented with the weather data during the Premier League schedule. Further, the entire schedule is supplemented with data of betting odds retrieved from popular betting site []. 
+
+### Weather dataset
 
 ```{r}
-#| label: load-dataset
+#| label: load-dataset-weather
 #| message: false
 ```
 
-A brief description of your dataset including its provenance, dimensions, etc. as well as the reason why you chose this dataset.
+#### Source
 
-Make sure to load the data and use inline code for some of this information.
+Data for the weather during matches has been retrieved from the weather data vendor [Visual Crossing](https://www.visualcrossing.com/weather-data). This data provider hosts extensive weather data spanning a wide range of global geographical locations and going back several decades. This provider compiles data by collecting raw measurements from observation stations located all across the world. Given that the locations of interest for us are all major cities in the U.K., we can be quite confident in the quality of this data.
 
-## Questions
+#### Collection method
+
+#### Overview
+
+```{r}
+#| label: glimpse-of-weather-data
+#| message: false
+```
+
+#### Ethics
+
+Although 
+
+### Historical dataset
+
+```{r}
+#| label: load-dataset-historical
+#| message: false
+```
+
+#### Source
+
+#### Collection method
+
+#### Overview
+
+```{r}
+#| label: glimpse-of-historic-data
+#| message: false
+```
+
+#### Ethics
+
+### Betting dataset
+
+```{r}
+#| label: load-dataset-betting
+#| message: false
+```
+
+#### Source
+
+#### Collection method
+
+#### Overview
+
+```{r}
+#| label: glimpse-of-betting-data
+#| message: false
+```
+
+#### Ethics
+
+## Research Questions
 
 The two questions you want to answer.
 
