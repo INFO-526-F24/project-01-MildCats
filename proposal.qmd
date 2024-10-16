@@ -1,6 +1,6 @@
 ---
-title: "Analyzing English Premier League Match Data"
-subtitle: "Seasons 2021-23"
+title: "Premier League Data Analysis"
+subtitle: "Years X-Y"
 author: 
   - name: "Mildcats"
     affiliations:
@@ -106,7 +106,7 @@ bet_odds <- read.csv(here("data", "raw_data", "betting_odds21-22.csv"))
 glimpse(bet_odds)
 ```
 
-#### Data Source and Ethical Considerations
+### Data Source and Ethical Considerations
 
 -   **Match Data**
 
@@ -136,11 +136,11 @@ glimpse(bet_odds)
 
     -   **Ethical Considerations -**
 
-        -    The weather data was collected through legal and legitimate means by using the Visual Crossing platform, by adhering to the platform's terms and conditions.
+        -   The weather data was collected through legal and legitimate means by using the Visual Crossing platform, by adhering to the platform's terms and conditions.
 
         -   Since there was a limit of 1000 record retrieval cap in a 24 hour period, the workload was divided among 6 team members.
 
-        -   The data was not manipulated at any point, thus allowing transperency and clear documentation of the process.
+        -   The data was not manipulated at any point, thus allowing transparency and clear documentation of the process.
 
         -   The data collected will solely be used for the intended purpose of this project.
 
@@ -162,8 +162,15 @@ glimpse(bet_odds)
 
 ## Research Questions
 
-The two questions you want to answer.
+The two questions we want to answer.
+
+1.  How do extreme pre-match weather conditions (such as heavy rain, strong winds, or cold temperatures) influence the likelihood of surprising outcomes, such as underdog victories, and how do betting odds before the match reflect these potential surprises compared to historical odds for the same teams?
+    -   **Rationale**: This question aims to explore whether extreme weather conditions lead to more unexpected outcomes, such as underdogs winning. It also examines how pre-match betting odds account for these potential disruptions, by comparing them to odds for the same teams in previous matches under normal conditions. This will help determine whether bookmakers adjust their odds in response to extreme weather, and how well these adjustments predict surprising results.
+    -   **Datasets involved**: Match data, weather data, betting odds.
+2.  How do different weather conditions (such as rain, wind, or temperature) impact Premier League match outcomes, and to what extent do pre-match betting odds take these weather factors into account?
+    -   **Rationale**: We want to explore how weather influences match results, looking specifically at whether certain conditions lead to more unexpected outcomes. We’re also interested in seeing how well pre-match betting odds reflect the potential impact of weather on performance, helping us understand if bookies accurately anticipate these effects.
+    -   **Datasets involved**: Match data, weather data, betting odds.
 
 ## Analysis plan
 
--   A plan for answering each of the questions including the variables involved, variables to be created (if any), external data to be merged in (if any).
+-   We are still working on the Analysis plan will keep updating the proposal as and when we progress through the project. Status updates can be found over this [document](https://docs.google.com/spreadsheets/d/1a_E8TZVmqjrWEYpPCJDA2rBPvrxk70A2HlkklfOmul0/edit?gid=0#gid=0).\
