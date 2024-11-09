@@ -255,4 +255,24 @@ final_data_path <- normalizePath(final_data_path)
 write_csv(soccer_pre, final_data_path)
 ```
 
+```{r}
+# Removing duplicate columns
+
+# Identify columns with .x and .y suffixes
+duplicate_columns <- unique(gsub("\\.x$|\\.y$", "", names(soccer_pre)[grepl("\\.x$|\\.y$", names(soccer_pre))]))
+
+# Condense columns by combining .x and .y versions, then removing suffixes
+for (col in duplicate_columns) {
+  soccer_pre[[col]] <- coalesce(soccer_pre[[paste0(col, ".x")]], soccer_pre[[paste0(col, ".y")]])
+  soccer_pre <- soccer_pre %>% select(-matches(paste0("^", col, "\\.(x|y)$")))
+}
+
+
+final_data_path = file.path(getwd(), "..", "data", "soccer_main.csv")
+  
+final_data_path <- normalizePath(final_data_path)  
+  
+write_csv(soccer_pre, final_data_path)
+```
+
 -   This notebook needs comments, re-organization of code - Will get it done before Milestone 3
