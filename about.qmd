@@ -11,12 +11,12 @@ This project was developed by **\[Mild Cats\]** For [INFO 526 - Data Analysis an
 -   Team member 2: **Prajwal Sathyanarayana**, First year Grad student at College of Information Science,\
     University of Arizona, contributing as Visualization Specialist
 
--   Team member 3: **Sankalp Sethi**, Final year graduate student pursuing a Masters Degree in Information Science - Machine Learning, contributing to Data Discovery, Processing and Analysis amongst other things
+-   Team member 3: **Sankalp Sethi**, Final year graduate student pursuing a Masters in Information Science - Machine Learning, contributing to Data Discovery, Processing and Analysis amongst other things
 
--   Team member 4: **Vishnu**
+-   Team member 4: **Vishnu Rendla:** Second year Grad student in Information Science - Machine Learning, contributing as Documentation lead, and supporting with individual tasks.
 
 -   Team member 5: **Tirth Shah**
 
--   Team member 6: **Solman Sarva**
+-   Team member 6: **Solman Sarva:** Second year graduate student pursuing a Masters in Information Science and Machine Learning, would be contributing as Visualization Specialist.
 
--   Team member 7: **Yash Salokhe**
+-   Team member 7: **Yash Salokhe:** First year graduate student pursuing a Masters in Data Science, will primarily be contributing to Data Discovery, Processing and Analysis.

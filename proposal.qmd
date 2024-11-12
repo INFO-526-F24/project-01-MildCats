@@ -57,7 +57,7 @@ Hence, this data-set stood out in it's ability to be an interesting case-study t
 #### Data Description
 
 | **Column Name** | **Description**                                   | **Type**    | **Usage in Project**                                |
-|----------------|--------------------|----------------|---------------------|
+|------------------|------------------|------------------|-------------------|
 | **Date**        | Date of the match                                 | Datetime    | Used to align matches with weather and betting data |
 | **HomeTeam**    | Name of the home team                             | Categorical | Analyze home team performance                       |
 | **AwayTeam**    | Name of the away team                             | Categorical | Compare with home team performance                  |
@@ -90,7 +90,7 @@ Some teams might have strategies, or players that do well in wet conditions that
 ##### Data Description
 
 | **Column Name** | **Description**                  | **Type** | **Usage in Project**                                         |
-|--------------|----------------------|--------------|-----------------------|
+|------------------|------------------|------------------|-------------------|
 | **datetime**    | Timestamp of weather data        | Datetime | Align weather with match date                                |
 | **tempmax**     | Maximum temperature on match day | Float    | Analyze impact of temperature on match outcomes              |
 | **tempmin**     | Minimum temperature on match day | Float    | Analyze impact of temperature fluctuations                   |
@@ -124,7 +124,7 @@ Finally, we wanted to check if it is the "house" (read bookmaker) always wins? O
 ##### Data Descripton
 
 | **Column Name** | **Description**                | **Type**    | **Usage in Project**                                            |
-|--------------|----------------------|--------------|-----------------------|
+|------------------|------------------|------------------|-------------------|
 | **HomeTeam**    | Name of the home team          | Categorical | Compare betting odds to actual results                          |
 | **AwayTeam**    | Name of the away team          | Categorical | Compare betting odds to actual results                          |
 | **B365H**       | Bet365 odds for home team win  | Float       | Analyze accuracy of betting odds                                |
@@ -253,3 +253,13 @@ glimpse(bet_odds)
         -   Additional statistical metrics might need to be calculated - Average Temperature, Precipitation etc.
     -   **Betting Odds Data** - Since none of us have experience with sports betting, we need to understand and isolate the important data points vis-a-vis bookmaking and betting odds and merge them into the match data-set.
 -   More details on the analysis plan shall be added here as the work progresses.
+
+Update during Milestone 3
+
+-   We have 3 major analysis directions we'd like to explore:
+
+    -   **Extreme Weather and Betting Odds** -
+    -   **The Accuracy of Odds** -
+    -   **Referee-Team Bias** -
+
+-   Each task will be assigned to be explored by 2-3 team members. Each subteam will complete their data analysis task, and formulate a sketch as to how best to visualize their results.
