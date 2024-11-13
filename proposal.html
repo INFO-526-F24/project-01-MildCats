@@ -9,7 +9,7 @@
 <meta name="author" content="Mildcats">
 <meta name="description" content="Project proposal outlining the objective, datasets, research questions and plan">
 
-<title>Team MildCats - Analyzing English Premier League Match Data</title>
+<title>Project Title - Analyzing English Premier League Match Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -4705,7 +4705,7 @@ vertical-align: -.125em;
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Team MildCats</span>
+    <span class="navbar-title">Project Title</span>
     </a>
   </div>
             <div id="quarto-search" class title="Search"></div>
@@ -4725,10 +4725,6 @@ vertical-align: -.125em;
   <li class="nav-item">
     <a class="nav-link" href="./presentation.html"> 
 <span class="menu-text">Presentation</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./contract.html"> 
-<span class="menu-text">Contract</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
@@ -4841,10 +4837,10 @@ vertical-align: -.125em;
 <h4 class="anchored" data-anchor-id="data-description">Data Description</h4>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 27%">
-<col style="width: 21%">
-<col style="width: 28%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 26%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -4907,11 +4903,11 @@ vertical-align: -.125em;
 </table>
 <p>We currently have the unprocessed, uncombined data-set as <em>soccer22-23.csv</em> in our raw data directory, but this will be merged to form a <em>soccer21-23.csv</em> dataset (a total of <strong>760</strong> rows).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>match_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;soccer21-22.csv&quot;</span>))</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>match_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;soccer21-22_with_location.csv&quot;</span>))</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">glimpse</span>(match_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 380
-Columns: 22
+Columns: 23
 $ Date     &lt;chr&gt; &quot;13/08/2021&quot;, &quot;14/08/2021&quot;, &quot;14/08/2021&quot;, &quot;14/08/2021&quot;, &quot;14/0…
 $ HomeTeam &lt;chr&gt; &quot;Brentford&quot;, &quot;Man United&quot;, &quot;Burnley&quot;, &quot;Chelsea&quot;, &quot;Everton&quot;, &quot;…
 $ AwayTeam &lt;chr&gt; &quot;Arsenal&quot;, &quot;Leeds&quot;, &quot;Brighton&quot;, &quot;Crystal Palace&quot;, &quot;Southampto…
@@ -4933,7 +4929,8 @@ $ AC       &lt;int&gt; 5, 4, 6, 2, 8, 4, 4, 11, 6, 11, 4, 4, 5, 5, 1, 2, 7, 4, 8
 $ HY       &lt;int&gt; 0, 1, 2, 0, 2, 1, 3, 1, 1, 2, 0, 3, 3, 2, 1, 4, 2, 1, 3, 0, 1…
 $ AY       &lt;int&gt; 0, 2, 1, 0, 0, 2, 1, 1, 0, 1, 0, 4, 1, 4, 0, 0, 3, 4, 0, 1, 2…
 $ HR       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
-$ AR       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1…</code></pre>
+$ AR       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1…
+$ location &lt;chr&gt; &quot;London&quot;, &quot;Manchester&quot;, &quot;Burnley&quot;, &quot;London&quot;, &quot;Liverpool&quot;, &quot;Le…</code></pre>
 </div>
 </div>
 </section>
@@ -4949,10 +4946,10 @@ $ AR       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <h5 class="anchored" data-anchor-id="data-description-1">Data Description</h5>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 30%">
-<col style="width: 19%">
-<col style="width: 31%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 26%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -5064,10 +5061,10 @@ $ stations         &lt;chr&gt; &quot;03346099999,F5682,F4675,03344099999,F1692,0
 <h5 class="anchored" data-anchor-id="data-descripton">Data Descripton</h5>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 30%">
-<col style="width: 19%">
-<col style="width: 31%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 26%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -5351,6 +5348,16 @@ $ AvgCAHA     &lt;dbl&gt; 2.09, 1.79, 2.12, 1.82, 1.86, 1.89, 1.90, 2.01, 1.89, 
 <li><strong>Betting Odds Data</strong> - Since none of us have experience with sports betting, we need to understand and isolate the important data points vis-a-vis bookmaking and betting odds and merge them into the match data-set.</li>
 </ul></li>
 <li>More details on the analysis plan shall be added here as the work progresses.</li>
+</ul>
+<p>Update during Milestone 3</p>
+<ul>
+<li><p>We have 3 major analysis directions we’d like to explore:</p>
+<ul>
+<li><strong>Extreme Weather and Betting Odds</strong> -</li>
+<li><strong>The Accuracy of Odds</strong> -</li>
+<li><strong>Referee-Team Bias</strong> -</li>
+</ul></li>
+<li><p>Each task will be assigned to be explored by 2-3 team members. Each subteam will complete their data analysis task, and formulate a sketch as to how best to visualize their results.</p></li>
 </ul>
 
 
@@ -6061,7 +6068,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-59"><a href="#cb8-59"></a><span class="fu">#### Data Description</span></span>
 <span id="cb8-60"><a href="#cb8-60"></a></span>
 <span id="cb8-61"><a href="#cb8-61"></a>| **Column Name** | **Description**                                   | **Type**    | **Usage in Project**                                |</span>
-<span id="cb8-62"><a href="#cb8-62"></a>|----------------|--------------------|----------------|---------------------|</span>
+<span id="cb8-62"><a href="#cb8-62"></a>|------------------|------------------|------------------|-------------------|</span>
 <span id="cb8-63"><a href="#cb8-63"></a>| **Date**        | Date of the match                                 | Datetime    | Used to align matches with weather and betting data |</span>
 <span id="cb8-64"><a href="#cb8-64"></a>| **HomeTeam**    | Name of the home team                             | Categorical | Analyze home team performance                       |</span>
 <span id="cb8-65"><a href="#cb8-65"></a>| **AwayTeam**    | Name of the away team                             | Categorical | Compare with home team performance                  |</span>
@@ -6077,7 +6084,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-77"><a href="#cb8-77"></a><span class="co">#| label: load-match-data</span></span>
 <span id="cb8-78"><a href="#cb8-78"></a><span class="co">#| message: false</span></span>
 <span id="cb8-79"><a href="#cb8-79"></a></span>
-<span id="cb8-80"><a href="#cb8-80"></a>match_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;soccer21-22.csv&quot;</span>))</span>
+<span id="cb8-80"><a href="#cb8-80"></a>match_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;raw_data&quot;</span>, <span class="st">&quot;soccer21-22_with_location.csv&quot;</span>))</span>
 <span id="cb8-81"><a href="#cb8-81"></a><span class="fu">glimpse</span>(match_data)</span>
 <span id="cb8-82"><a href="#cb8-82"></a><span class="in">```</span></span>
 <span id="cb8-83"><a href="#cb8-83"></a></span>
@@ -6094,7 +6101,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-94"><a href="#cb8-94"></a><span class="fu">##### Data Description</span></span>
 <span id="cb8-95"><a href="#cb8-95"></a></span>
 <span id="cb8-96"><a href="#cb8-96"></a>| **Column Name** | **Description**                  | **Type** | **Usage in Project**                                         |</span>
-<span id="cb8-97"><a href="#cb8-97"></a>|--------------|----------------------|--------------|-----------------------|</span>
+<span id="cb8-97"><a href="#cb8-97"></a>|------------------|------------------|------------------|-------------------|</span>
 <span id="cb8-98"><a href="#cb8-98"></a>| **datetime**    | Timestamp of weather data        | Datetime | Align weather with match date                                |</span>
 <span id="cb8-99"><a href="#cb8-99"></a>| **tempmax**     | Maximum temperature on match day | Float    | Analyze impact of temperature on match outcomes              |</span>
 <span id="cb8-100"><a href="#cb8-100"></a>| **tempmin**     | Minimum temperature on match day | Float    | Analyze impact of temperature fluctuations                   |</span>
@@ -6128,7 +6135,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-130"><a href="#cb8-130"></a><span class="fu">##### Data Descripton</span></span>
 <span id="cb8-131"><a href="#cb8-131"></a></span>
 <span id="cb8-132"><a href="#cb8-132"></a>| **Column Name** | **Description**                | **Type**    | **Usage in Project**                                            |</span>
-<span id="cb8-133"><a href="#cb8-133"></a>|--------------|----------------------|--------------|-----------------------|</span>
+<span id="cb8-133"><a href="#cb8-133"></a>|------------------|------------------|------------------|-------------------|</span>
 <span id="cb8-134"><a href="#cb8-134"></a>| **HomeTeam**    | Name of the home team          | Categorical | Compare betting odds to actual results                          |</span>
 <span id="cb8-135"><a href="#cb8-135"></a>| **AwayTeam**    | Name of the away team          | Categorical | Compare betting odds to actual results                          |</span>
 <span id="cb8-136"><a href="#cb8-136"></a>| **B365H**       | Bet365 odds for home team win  | Float       | Analyze accuracy of betting odds                                |</span>
@@ -6257,6 +6264,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-261"><a href="#cb8-261"></a><span class="ss">        -   </span>Additional statistical metrics might need to be calculated - Average Temperature, Precipitation etc.</span>
 <span id="cb8-262"><a href="#cb8-262"></a><span class="ss">    -   </span>**Betting Odds Data** - Since none of us have experience with sports betting, we need to understand and isolate the important data points vis-a-vis bookmaking and betting odds and merge them into the match data-set.</span>
 <span id="cb8-263"><a href="#cb8-263"></a><span class="ss">-   </span>More details on the analysis plan shall be added here as the work progresses.</span>
+<span id="cb8-264"><a href="#cb8-264"></a></span>
+<span id="cb8-265"><a href="#cb8-265"></a>Update during Milestone 3</span>
+<span id="cb8-266"><a href="#cb8-266"></a></span>
+<span id="cb8-267"><a href="#cb8-267"></a><span class="ss">-   </span>We have 3 major analysis directions we&#39;d like to explore:</span>
+<span id="cb8-268"><a href="#cb8-268"></a></span>
+<span id="cb8-269"><a href="#cb8-269"></a><span class="ss">    -   </span>**Extreme Weather and Betting Odds** -</span>
+<span id="cb8-270"><a href="#cb8-270"></a><span class="ss">    -   </span>**The Accuracy of Odds** -</span>
+<span id="cb8-271"><a href="#cb8-271"></a><span class="ss">    -   </span>**Referee-Team Bias** -</span>
+<span id="cb8-272"><a href="#cb8-272"></a></span>
+<span id="cb8-273"><a href="#cb8-273"></a><span class="ss">-   </span>Each task will be assigned to be explored by 2-3 team members. Each subteam will complete their data analysis task, and formulate a sketch as to how best to visualize their results.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

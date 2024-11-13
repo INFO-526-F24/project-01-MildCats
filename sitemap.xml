@@ -2,22 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://INFO-526-F24.github.io/project-01-MildCats/proposal.html</loc>
-    <lastmod>2024-10-16T23:50:40.784Z</lastmod>
+    <lastmod>2024-11-13T19:54:23.811Z</lastmod>
   </url>
   <url>
     <loc>https://INFO-526-F24.github.io/project-01-MildCats/index.html</loc>
-    <lastmod>2024-10-16T22:02:36.847Z</lastmod>
-  </url>
-  <url>
-    <loc>https://INFO-526-F24.github.io/project-01-MildCats/about.html</loc>
-    <lastmod>2024-10-16T22:02:36.794Z</lastmod>
+    <lastmod>2024-11-13T19:48:21.961Z</lastmod>
   </url>
   <url>
     <loc>https://INFO-526-F24.github.io/project-01-MildCats/contract.html</loc>
     <lastmod>2024-10-16T22:02:36.794Z</lastmod>
   </url>
   <url>
+    <loc>https://INFO-526-F24.github.io/project-01-MildCats/about.html</loc>
+    <lastmod>2024-11-13T06:56:28.455Z</lastmod>
+  </url>
+  <url>
+    <loc>https://INFO-526-F24.github.io/project-01-MildCats/etl/dataPreprocessing.html</loc>
+    <lastmod>2024-11-09T07:17:01.637Z</lastmod>
+  </url>
+  <url>
     <loc>https://INFO-526-F24.github.io/project-01-MildCats/presentation.html</loc>
-    <lastmod>2024-10-16T22:02:36.847Z</lastmod>
+    <lastmod>2024-11-13T06:56:25.641Z</lastmod>
   </url>
 </urlset>
