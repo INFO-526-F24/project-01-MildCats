@@ -31,20 +31,14 @@ The project prioritizes accessibility by presenting the findings in an engaging 
 
 ![](images/layout-1.jpeg){fig-align="center" width="500"}
 
+-   We aim to simply present the texture of the data with this section
+
+    -   The left hand panel will feature the list of teams, and the user can select 1 team to see their trend over the season, and 2, for a head-to-head comparison. When 1 team is selected, the graphical display pane will plot the dates on which the team played on the x axis, the pre-match odds on the y axis, along with a tooltip to show which team they're playing against.
+
+    -   The dates of extreme weather, selected through extreme upper and lower percentiles, are highlighted similarly as was done in HW2 Q3. Along each plot point, the underdog or favorite is determined based on their number of wins up until that date, and color coded accordingly. When 2 teams are selected, the resulting plot will be the same, but with the dates filtered to only show matches between the 2.
+
 #### Analysis
 
 ![](images/layout-2.jpeg){fig-align="center" width="520"}
 
-## Description of Planned Visuals
-
-### Extreme weather and betting odds
-
-*How (if at all) does extreme weather prior to a match, shift a given team's odds? Do extreme prematch weather conditions favor the topdog or the underdog in a match up, according to prematch betting odds?*
-
-The left hand panel will feature the list of teams, and the user can select 1 team to see their trend over the season, and 2, for a head-to-head comparison. When 1 team is selected, the graphical display pane will plot the dates on which the team played on the x axis, the pre-match odds on the y axis, along with a tooltip to show which team they're playing against. The dates of extreme weather, selected through extreme upper and lower percentiles, are highlighted similarly as was done in HW2 Q3. Along each plot point, the underdog or topdog is determined based on their number of wins up until that date, and color coded accordingly. When 2 teams are selected, the resulting plot will be the same, but with the dates filtered to only show matches between the 2.
-
-### How well do odds predict outcome on extreme weather days?
-
-This visualization can be used in tandem with the previous one. This helps answer and visualize the straightforward question: *How well do odds predict outcomes, for each team and matchup? And how does it change on extreme weather days?*
-
-We can answer this question through comparative statistics, but how to visualize it?
+-   In this section, we aim to address our research questions. While we are still working on formulating the actual visualizations and analysis here, the crux of our efforts is captured in our research questions, which are detailed in the **proposal**.

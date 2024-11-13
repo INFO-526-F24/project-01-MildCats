@@ -73,7 +73,7 @@ We currently have the unprocessed, uncombined data-set as *soccer22-23.csv* in o
 #| label: load-match-data
 #| message: false
 
-match_data <- read.csv(here("data", "raw_data", "soccer21-22.csv"))
+match_data <- read.csv(here("data", "raw_data", "soccer21-22_with_location.csv"))
 glimpse(match_data)
 ```
 
@@ -245,21 +245,11 @@ glimpse(bet_odds)
 
         -   Pre-match betting odds.
 
-## Analysis plan
+## Analysis Plan
 
 -   Before we begin the analysis, the following pre-processing steps need to be performed -
     -   **Extending Match Data** - We need to merge the match data from 21-22 with 22-23 seasons to give us a parent match data-set
     -   **Flattening and Normalizing Weather Data -** Our weather data is currently city-wise, we need to aggregate this into a single data-set, and create a *foreign key* or identifier which will help us join it with the match data
         -   Additional statistical metrics might need to be calculated - Average Temperature, Precipitation etc.
     -   **Betting Odds Data** - Since none of us have experience with sports betting, we need to understand and isolate the important data points vis-a-vis bookmaking and betting odds and merge them into the match data-set.
--   More details on the analysis plan shall be added here as the work progresses.
-
-Update during Milestone 3
-
--   We have 3 major analysis directions we'd like to explore:
-
-    -   **Extreme Weather and Betting Odds** -
-    -   **The Accuracy of Odds** -
-    -   **Referee-Team Bias** -
-
--   Each task will be assigned to be explored by 2-3 team members. Each subteam will complete their data analysis task, and formulate a sketch as to how best to visualize their results.
+-   The ETL has been completed via **etl\\dataPreprocessing.qmd** to extract the merged dataset that will be used as the main data source for this project - **soccer_main.csv**
