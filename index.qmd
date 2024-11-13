@@ -25,13 +25,15 @@ We aim to uncover patterns such as home ground advantage, the impact of weather 
 
 The project prioritizes accessibility by presenting the findings in an engaging and easy-to-understand format for a wider audience.
 
-## Match Datapoint Outline
+## Proposed App Layout 
 
-![](images/Blank%20diagram.jpeg){fig-align="center"}
+#### Descriptive Statistics 
 
-## Analysis Interactive Outline
+![](images/layout-1.jpeg){fig-align="center" width="500"}
 
-![](images/Blank%20diagram%20(1).jpeg)
+#### Analysis
+
+![](images/layout-2.jpeg){fig-align="center" width="520"}
 
 ## Description of Planned Visuals
 
@@ -46,5 +48,3 @@ The left hand panel will feature the list of teams, and the user can select 1 te
 This visualization can be used in tandem with the previous one. This helps answer and visualize the straightforward question: *How well do odds predict outcomes, for each team and matchup? And how does it change on extreme weather days?*
 
 We can answer this question through comparative statistics, but how to visualize it?
-
-### Referee - Team bias
