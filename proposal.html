@@ -4761,7 +4761,7 @@ vertical-align: -.125em;
   <li><a href="#augmenting-datasets" id="toc-augmenting-datasets" class="nav-link" data-scroll-target="#augmenting-datasets">Augmenting Datasets</a></li>
   </ul></li>
   <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions">Research Questions</a></li>
-  <li><a href="#analysis-plan" id="toc-analysis-plan" class="nav-link" data-scroll-target="#analysis-plan">Analysis plan</a></li>
+  <li><a href="#analysis-plan" id="toc-analysis-plan" class="nav-link" data-scroll-target="#analysis-plan">Analysis Plan</a></li>
   </ul>
 </nav>
     </div>
@@ -5336,7 +5336,7 @@ $ AvgCAHA     &lt;dbl&gt; 2.09, 1.79, 2.12, 1.82, 1.86, 1.89, 1.90, 2.01, 1.89, 
 </ul>
 </section>
 <section id="analysis-plan" class="level2">
-<h2 class="anchored" data-anchor-id="analysis-plan">Analysis plan</h2>
+<h2 class="anchored" data-anchor-id="analysis-plan">Analysis Plan</h2>
 <ul>
 <li>Before we begin the analysis, the following pre-processing steps need to be performed -
 <ul>
@@ -5347,17 +5347,7 @@ $ AvgCAHA     &lt;dbl&gt; 2.09, 1.79, 2.12, 1.82, 1.86, 1.89, 1.90, 2.01, 1.89, 
 </ul></li>
 <li><strong>Betting Odds Data</strong> - Since none of us have experience with sports betting, we need to understand and isolate the important data points vis-a-vis bookmaking and betting odds and merge them into the match data-set.</li>
 </ul></li>
-<li>More details on the analysis plan shall be added here as the work progresses.</li>
-</ul>
-<p>Update during Milestone 3</p>
-<ul>
-<li><p>We have 3 major analysis directions we’d like to explore:</p>
-<ul>
-<li><strong>Extreme Weather and Betting Odds</strong> -</li>
-<li><strong>The Accuracy of Odds</strong> -</li>
-<li><strong>Referee-Team Bias</strong> -</li>
-</ul></li>
-<li><p>Each task will be assigned to be explored by 2-3 team members. Each subteam will complete their data analysis task, and formulate a sketch as to how best to visualize their results.</p></li>
+<li>The ETL has been completed via <strong>etl\dataPreprocessing.qmd</strong> to extract the merged dataset that will be used as the main data source for this project - <strong>soccer_main.csv</strong></li>
 </ul>
 
 
@@ -6256,24 +6246,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-253"><a href="#cb8-253"></a></span>
 <span id="cb8-254"><a href="#cb8-254"></a><span class="ss">        -   </span>Pre-match betting odds.</span>
 <span id="cb8-255"><a href="#cb8-255"></a></span>
-<span id="cb8-256"><a href="#cb8-256"></a><span class="fu">## Analysis plan</span></span>
+<span id="cb8-256"><a href="#cb8-256"></a><span class="fu">## Analysis Plan</span></span>
 <span id="cb8-257"><a href="#cb8-257"></a></span>
 <span id="cb8-258"><a href="#cb8-258"></a><span class="ss">-   </span>Before we begin the analysis, the following pre-processing steps need to be performed -</span>
 <span id="cb8-259"><a href="#cb8-259"></a><span class="ss">    -   </span>**Extending Match Data** - We need to merge the match data from 21-22 with 22-23 seasons to give us a parent match data-set</span>
 <span id="cb8-260"><a href="#cb8-260"></a><span class="ss">    -   </span>**Flattening and Normalizing Weather Data -** Our weather data is currently city-wise, we need to aggregate this into a single data-set, and create a *foreign key* or identifier which will help us join it with the match data</span>
 <span id="cb8-261"><a href="#cb8-261"></a><span class="ss">        -   </span>Additional statistical metrics might need to be calculated - Average Temperature, Precipitation etc.</span>
 <span id="cb8-262"><a href="#cb8-262"></a><span class="ss">    -   </span>**Betting Odds Data** - Since none of us have experience with sports betting, we need to understand and isolate the important data points vis-a-vis bookmaking and betting odds and merge them into the match data-set.</span>
-<span id="cb8-263"><a href="#cb8-263"></a><span class="ss">-   </span>More details on the analysis plan shall be added here as the work progresses.</span>
-<span id="cb8-264"><a href="#cb8-264"></a></span>
-<span id="cb8-265"><a href="#cb8-265"></a>Update during Milestone 3</span>
-<span id="cb8-266"><a href="#cb8-266"></a></span>
-<span id="cb8-267"><a href="#cb8-267"></a><span class="ss">-   </span>We have 3 major analysis directions we&#39;d like to explore:</span>
-<span id="cb8-268"><a href="#cb8-268"></a></span>
-<span id="cb8-269"><a href="#cb8-269"></a><span class="ss">    -   </span>**Extreme Weather and Betting Odds** -</span>
-<span id="cb8-270"><a href="#cb8-270"></a><span class="ss">    -   </span>**The Accuracy of Odds** -</span>
-<span id="cb8-271"><a href="#cb8-271"></a><span class="ss">    -   </span>**Referee-Team Bias** -</span>
-<span id="cb8-272"><a href="#cb8-272"></a></span>
-<span id="cb8-273"><a href="#cb8-273"></a><span class="ss">-   </span>Each task will be assigned to be explored by 2-3 team members. Each subteam will complete their data analysis task, and formulate a sketch as to how best to visualize their results.</span>
+<span id="cb8-263"><a href="#cb8-263"></a><span class="ss">-   </span>The ETL has been completed via **etl\\dataPreprocessing.qmd** to extract the merged dataset that will be used as the main data source for this project - **soccer_main.csv**</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
