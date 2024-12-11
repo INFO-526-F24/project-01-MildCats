@@ -57,7 +57,7 @@ Hence, this data-set stood out in it's ability to be an interesting case-study t
 #### Data Description
 
 | **Column Name** | **Description**                                   | **Type**    | **Usage in Project**                                |
-|------------------|------------------|------------------|-------------------|
+|-----------------|---------------------------------------------------|-------------|-----------------------------------------------------|
 | **Date**        | Date of the match                                 | Datetime    | Used to align matches with weather and betting data |
 | **HomeTeam**    | Name of the home team                             | Categorical | Analyze home team performance                       |
 | **AwayTeam**    | Name of the away team                             | Categorical | Compare with home team performance                  |
@@ -90,7 +90,7 @@ Some teams might have strategies, or players that do well in wet conditions that
 ##### Data Description
 
 | **Column Name** | **Description**                  | **Type** | **Usage in Project**                                         |
-|------------------|------------------|------------------|-------------------|
+|-----------------|----------------------------------|----------|--------------------------------------------------------------|
 | **datetime**    | Timestamp of weather data        | Datetime | Align weather with match date                                |
 | **tempmax**     | Maximum temperature on match day | Float    | Analyze impact of temperature on match outcomes              |
 | **tempmin**     | Minimum temperature on match day | Float    | Analyze impact of temperature fluctuations                   |
@@ -124,7 +124,7 @@ Finally, we wanted to check if it is the "house" (read bookmaker) always wins? O
 ##### Data Descripton
 
 | **Column Name** | **Description**                | **Type**    | **Usage in Project**                                            |
-|------------------|------------------|------------------|-------------------|
+|-----------------|--------------------------------|-------------|-----------------------------------------------------------------|
 | **HomeTeam**    | Name of the home team          | Categorical | Compare betting odds to actual results                          |
 | **AwayTeam**    | Name of the away team          | Categorical | Compare betting odds to actual results                          |
 | **B365H**       | Bet365 odds for home team win  | Float       | Analyze accuracy of betting odds                                |

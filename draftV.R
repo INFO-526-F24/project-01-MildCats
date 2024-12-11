@@ -53,3 +53,18 @@ for (col in columns) {
 }
 
 write.csv(data, "output_file.csv", row.names = FALSE)
+
+teams <- unique(data$hometeam)
+teams
+df <- data
+# Iterate over elements in the list
+result <- lapply(teams, function(x) {
+  df[df$hometeam == x | df$awayteam == x, ]
+})
+
+# Name the list for easier identification
+names(result) <- teams
+
+# Print the result
+result
+

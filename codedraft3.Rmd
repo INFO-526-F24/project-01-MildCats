@@ -1,0 +1,83 @@
+---
+title: "working_draft"
+output: html_document
+date: "2024-12-11"
+---
+
+```{r setup, include=FALSE}
+library(pacman)
+pacman::p_load(readr, ggplot, dplyr)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r imports}
+data <- read_csv("output_file.csv")
+
+```
+
+
+```{r subdata}
+vars <- c("date", "hometeam", "awayteam", "b365h", "b365a", "ftr", "temp_outlier", "dew_outlier", "humidity_outlier", "precip_outlier", "windgust_outlier", "windspeed_outlier", "solarradiation_outlier")
+weather_vars = c("temp_outlier", "dew_outlier", "humidity_outlier", "precip_outlier", "windgust_outlier", "windspeed_outlier", "solarradiation_outlier")
+
+subdata <- data %>% select(vars)
+subdata <- subdata %>%
+  mutate(
+    team_winner = ifelse(ftr == 'H', hometeam, awayteam)
+  )
+for (col in weather_vars) {
+  subdata[[col]] <- subdata[[col]] > 0
+}
+df <- subdata
+
+team_colors <- c()
+
+teams <- unique(df$awayteam)
+
+```
+
+
+```{r team schedule}
+result <- lapply(teams, function(x) {
+  df[df$hometeam == x | df$awayteam == x, ]
+})
+
+names(result) <- teams
+
+opponents <- result
+
+```
+
+
+```{r team odds}
+for (i in seq_along(opponents)) {
+  # Initialize team_odds and opponent_odds with NA
+  opponents[[i]]$team_odds <- NA
+  opponents[[i]]$opponent_odds <- NA
+  
+  # Assign values to both columns based on the condition
+  opponents[[i]]$team_odds <- ifelse(
+    opponents[[i]]$hometeam == teams[[i]],  # If the hometeam matches the team
+    opponents[[i]]$b365h,                  # Assign b365h to team_odds
+    opponents[[i]]$b365a                   # Otherwise, assign b365a to team_odds
+  )
+  
+  opponents[[i]]$opponent_odds <- ifelse(
+    opponents[[i]]$hometeam == teams[[i]],  # If the hometeam matches the team
+    opponents[[i]]$b365a,                  # Assign b365a to opponent_odds
+    opponents[[i]]$b365h                   # Otherwise, assign b365h to opponent_odds
+  )
+}
+
+```
+```{r plots}
+result <- lapply(teams, function(x) {
+  df[df$hometeam == x | df$awayteam == x, ]
+})
+
+names(result) <- teams
+
+opponents <- result
+
+```
