@@ -1,0 +1,140 @@
+---
+title: "Pre-Match Betting (Accuracy of Predictions vs. Actual Outcomes)"
+author: "tirthshah1-DA(Mildcats)"
+date: "2024-12-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# Load necessary libraries
+library(shiny)
+library(ggplot2)
+library(dplyr)
+library(plotly)
+library(here)  # For managing file paths dynamically
+
+# Define the dataset location dynamically
+file_path <- here("data", "soccer_main.csv")  # Adjust subfolder structure if needed
+
+# Load the dataset once globally
+data <- read.csv(file_path)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Load necessary libraries
+library(shiny)
+library(ggplot2)
+library(dplyr)
+library(plotly)
+library(here)
+
+# Define the dataset location dynamically
+file_path <- here("data", "soccer_main.csv")  # Adjust subfolder structure if needed
+
+# Load the dataset once globally
+data <- read.csv(file_path)
+knitr::opts_chunk$set(echo = TRUE)
+
+# Define UI for the app
+ui <- fluidPage(
+  titlePanel("Accuracy of Pre-Match Betting Predictions"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(
+        inputId = "hometeam",
+        label = "Select Home Team:",
+        choices = unique(data$hometeam),
+        selected = unique(data$hometeam)[1]
+      ),
+      selectInput(
+        inputId = "awayteam",
+        label = "Select Away Team:",
+        choices = unique(data$awayteam),
+        selected = unique(data$awayteam)[1]
+      )
+    ),
+    
+    mainPanel(
+      plotlyOutput(outputId = "accuracy_chart")
+    )
+  )
+)
+
+# Define server logic
+server <- function(input, output, session) {
+  
+  # Reactive data based on selected teams
+  filtered_data <- reactive({
+    df <- data %>% filter(hometeam == input$hometeam & awayteam == input$awayteam)
+    df
+  })
+  
+  # Define the logic for calculating accuracy based on betting odds
+  calculate_accuracy <- function(df) {
+    # Ensure we have the betting odds columns in the dataset
+    if(!all(c("b365ahh", "b365aha") %in% colnames(df))) {
+      stop("The required columns (b365ahh, b365aha) are not in the dataset.")
+    }
+    
+    # Predicted outcome based on odds
+    df <- df %>%
+      mutate(predicted_outcome = case_when(
+        b365ahh < b365aha ~ "Home Win",  # If home odds are less than away odds, predict home win
+        b365aha < b365ahh ~ "Away Win",  # If away odds are less than home odds, predict away win
+        TRUE ~ "Draw"                   # Otherwise predict a draw
+      ))
+    
+    # Actual outcome (you will need to adjust this according to your actual outcome column in the dataset)
+    # I am assuming a column like "actual_outcome" exists. You should replace it with the appropriate column.
+    df <- df %>%
+      mutate(actual_outcome = case_when(
+        # Adjust this based on the column that gives actual results in your dataset
+        TRUE ~ "Unknown"  # You need to replace this with the actual logic or column for outcomes
+      ))
+    
+    # Compare predicted outcome with actual outcome
+    df <- df %>%
+      mutate(is_correct = if_else(predicted_outcome == actual_outcome, 1, 0))
+    
+    accuracy <- sum(df$is_correct) / nrow(df)  # Accuracy as the percentage of correct predictions
+    return(accuracy)
+  }
+  
+  # Render the accuracy chart
+  output$accuracy_chart <- renderPlotly({
+    # Ensure filtered data is not empty
+    if (nrow(filtered_data()) == 0) {
+      showNotification("No data available for the selected teams.", type = "error")
+      return(NULL)  # No data for the selected teams
+    }
+    
+    # Calculate accuracy for the selected teams
+    accuracy <- calculate_accuracy(filtered_data())
+    
+    # Create the ggplot object for accuracy visualization
+    accuracy_data <- data.frame(
+      Outcome = c("Correct Predictions", "Incorrect Predictions"),
+      Count = c(accuracy * nrow(filtered_data()), (1 - accuracy) * nrow(filtered_data()))
+    )
+    
+    p <- ggplot(accuracy_data, aes(x = Outcome, y = Count, fill = Outcome)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      labs(
+        title = paste("Accuracy of Pre-Match Betting Predictions for", input$hometeam, "vs.", input$awayteam),
+        x = "Prediction Outcome",
+        y = "Count",
+        fill = "Outcome"
+      ) +
+      theme_minimal()
+    
+    # Convert the ggplot object to a plotly object for interactivity
+    ggplotly(p)
+  })
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+
+```
