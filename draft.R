@@ -18,22 +18,18 @@ print(correlation)
 library(ggplot2)
 library(dplyr)
 
-# Sample data
-data <- data.frame(
-  match_id = 1:5,                     # Match IDs
-  team1_score = c(70, 80, 90, 100, 85), # Team 1 scores
-  team2_score = c(65, 85, 95, 85, 90)   # Team 2 scores
-)
+library(readr)
+data <- read_csv("data/soccer_main.csv")
 
 # Calculate magnitude and team colors
 data <- data %>%
   mutate(
-    magnitude = abs(team1_score - team2_score),
-    team_winner = ifelse(team1_score > team2_score, "Team 1", "Team 2")
+    magnitude = abs(b365h - b365a),
+    team_winner = ifelse(htr == 'H', hometeam, awayteam)
   )
 
 # Create the lollipop chart
-ggplot(data, aes(x = match_id, y = 0)) +
+ggplot(data, aes(x = date, y = 0)) +
   geom_segment(aes(
     xend = match_id,
     y = -magnitude / 2,
@@ -67,6 +63,8 @@ data <- data.frame(
   opponent_score = c(20, 25, 15),
   extreme_weather = c(TRUE, FALSE, TRUE)
 )
+
+
 
 # Add magnitude and result
 data <- data %>%
@@ -106,3 +104,4 @@ ggplot(data, aes(x = date)) +
     color = "Legend"
   ) +
   theme_minimal()
+
