@@ -21,21 +21,44 @@ data <- read.csv(file_path)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ```{r}
 # Load necessary libraries
-library(shiny)
-library(ggplot2)
 library(dplyr)
-library(plotly)
 library(here)
 
-# Define the dataset location dynamically
-file_path <- here("data", "soccer_main.csv")  # Adjust subfolder structure if needed
+# Define the file path dynamically (adjust for your Git repo structure if necessary)
+file_path <- here("data", "soccer_main.csv")  
 
-# Load the dataset once globally
+# Load the dataset
 data <- read.csv(file_path)
-knitr::opts_chunk$set(echo = TRUE)
 
+# Ensure the dataset contains the required betting columns
+betting_columns <- c("b365ahh", "b365aha")
+if (!all(betting_columns %in% colnames(data))) {
+  stop("Required betting columns are not found in the dataset.")
+}
+
+# Add binary betting outcome columns to the dataset
+data <- data %>%
+  rowwise() %>%
+  mutate(
+    # Binary indicators for betting outcomes
+    binary_home_win = ifelse(b365ahh < b365aha, 1, 0),
+    binary_away_win = ifelse(b365aha < b365ahh, 1, 0),
+    binary_draw = ifelse(b365ahh == b365aha, 1, 0)
+  ) %>%
+  ungroup()
+
+# Save the updated dataset back to the file (Git-tracked file in this case)
+write.csv(data, file_path, row.names = FALSE)
+
+# Print confirmation message
+print("The dataset has been updated with binary betting outcome columns and saved back.")
+```
+
+
+```{r}
 # Define UI for the app
 ui <- fluidPage(
   titlePanel("Accuracy of Pre-Match Betting Predictions"),
