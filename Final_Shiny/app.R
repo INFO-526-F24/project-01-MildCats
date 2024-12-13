@@ -115,6 +115,25 @@ validate_logo_urls <- function(logo_urls) {
 }
 logo_urls <- validate_logo_urls(logo_urls)
 
+
+# Load the dataset
+df <- read_csv(here("data","soccer_main.csv"))
+
+# Data Processing
+grouped_df <- df %>%
+  group_by(referee) %>%
+  summarize(
+    hy = sum(hy),
+    ay = sum(ay),
+    hr = sum(hr),
+    ar = sum(ar),
+    hf = sum(hf),
+    af = sum(af)
+  )
+
+grouped_df_used <- grouped_df %>%
+  mutate(referee = str_replace_all(referee, " ", "_"))
+
 plot_opponent <- function(team_name, opponents, teams, temp_outlier_col, logo_urls) {
   weather_colors <- c(
     "temp extreme" = "red", "dew extreme" = "lightblue",
@@ -212,7 +231,21 @@ ui <- fluidPage(
       )
     ),
     
-    tabPanel("Raw", fluidPage(DTOutput("raw_data_table")))
+    tabPanel(
+      "Referee Performance",
+      sidebarLayout(
+        sidebarPanel(
+          selectInput(
+            inputId = "referee",
+            label = "Select a Referee:",
+            choices = unique(grouped_df$referee)
+          )
+        ),
+        mainPanel(
+          plotOutput("pieChart")
+        )
+      )
+    ),
   )
 )
 
@@ -239,6 +272,63 @@ server <- function(input, output, session) {
       options = list(pageLength = 10, searchHighlight = TRUE, autoWidth = TRUE, scrollX = TRUE),
       filter = "top"
     )
+  })
+  # Function to plot referee stats
+  plot_referee_stats <- function(referee_name) {
+    referee_name <- gsub(" ", "_", referee_name)
+    
+    # Filter data for the specific referee
+    referee_data <- grouped_df_used %>%
+      filter(referee == referee_name)
+    
+    # Calculate percentages for home and away teams
+    home_stats <- data.frame(
+      category = c("Cards", "Fouls"),
+      proportion = c(
+        (referee_data$hr + referee_data$hy) / referee_data$hf * 100,
+        100 - (referee_data$hr + referee_data$hy) / referee_data$hf * 100
+      )
+    )
+    away_stats <- data.frame(
+      category = c("Cards", "Fouls"),
+      proportion = c(
+        (referee_data$ar + referee_data$ay) / referee_data$af * 100,
+        100 - (referee_data$ar + referee_data$ay) / referee_data$af * 100
+      )
+    )
+    
+    # Plot for Home Team
+    p1 <- ggplot(home_stats, aes(x = "", y = proportion, fill = category)) +
+      geom_bar(stat = "identity", width = 1) +
+      coord_polar(theta = "y") +
+      labs(title = paste0("Home Team: ", input$referee)) +
+      theme_void() +
+      scale_fill_manual(values = c("red", "yellow")) +
+      geom_text(
+        aes(y = cumsum(proportion) - proportion / 2, label = paste0(round(proportion, 2), "%")),
+        size = 4
+      )
+    
+    # Plot for Away Team
+    p2 <- ggplot(away_stats, aes(x = "", y = proportion, fill = category)) +
+      geom_bar(stat = "identity", width = 1) +
+      coord_polar(theta = "y") +
+      labs(title = paste0("Away Team: ", input$referee)) +
+      theme_void() +
+      scale_fill_manual(values = c("red", "yellow")) +
+      geom_text(
+        aes(y = cumsum(proportion) - proportion / 2, label = paste0(round(proportion, 2), "%")),
+        size = 4
+      )
+    
+    # Combine and return plots
+    grid.arrange(p1, p2, ncol = 2, top = paste0("Card and Foul Distribution for Referee: ", input$referee))
+  }
+  
+  # Render the pie chart
+  output$pieChart <- renderPlot({
+    req(input$referee)  # Ensure referee input is not null
+    plot_referee_stats(input$referee)
   })
 }
 
