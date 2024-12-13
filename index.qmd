@@ -65,7 +65,35 @@ The project prioritizes accessibility by presenting the findings in an engaging 
 
 -   In this section, we aim to address our research questions. While we are still working on formulating the actual visualizations and analysis here, the crux of our efforts is captured in our research questions, which are detailed in the **proposal**.
 
+## Motivation 
+
+### The Why
+
+-   All of us are avid sports fans (like most of you!)
+
+-   Modern sports, especially those which have large fan-bases around the world are data-rich
+
+-   The English Premier League is the most watched football (soccer) league in the world (Over 3 billion viewers every season)
+
+-   Large publicly available supplementary data-sets (weather, betting odds etc.)
+
+### The What
+
+-   We focus on 2 key variables in our analysis -
+
+    -   Weather
+
+    -   Betting Odds
+
+-   Our main motivation is to identify whether these variables can be accurate predictors of match outcomes
+
+-   We also examine secondary relationships like -
+
+    -   *"Whether referee decisions are uniformly distributed or can bias be quantitatively established ?"*
+
 ## Data Preprocessing
+
+##### Defining the Data Sources
 
 We started off with 3 distinct data sources as mentioned in our proposal -
 
@@ -78,6 +106,8 @@ We started off with 3 distinct data sources as mentioned in our proposal -
 Since all these data-sets were of different dimensions and different time frames, we first had to pre-process, transform and merge these data-sets into a main data-set which would power our Shiny App.
 
 ##### Collect Source Data
+
+-   We began with collating all the different data-set types in one place, and the following code does that
 
 ```{r echo=FALSE}
 #| label: collect-source-data
@@ -101,6 +131,10 @@ file_list <- list.files(path = raw_data_path, pattern = "\\.(csv|xlsx)$", full.n
 ```
 
 ##### Normalizing Data
+
+-   The next task was to normalize the data
+
+-   Since the dates, formats and dimensions of the data were different, we had to normalize everything to a match-level time-frame
 
 ```{r echo=FALSE}
 #| label: data-normalization
@@ -150,6 +184,10 @@ normalize_date <- function(file) {
 
 ##### Process Dates
 
+-   A key step here was to normalize the dates themselves
+
+-   This was done by standardizing the date format
+
 ```{r echo=FALSE}
 #| label: process-dates
 
@@ -175,7 +213,7 @@ for (file in file_list) {
 
 ##### Append, Join and Merge Datasets
 
--   We first append individual datasets of the same type to create a unified dataset that spans from 21-23
+-   We then appended individual datasets of the same type to create a unified dataset that spans from 21-23
 
 ```{r echo=FALSE}
 #| label: append-data
@@ -226,7 +264,7 @@ if (length(preproc_data_list$soccer) > 0) {
 
 ```
 
--   Normalize column names by converting all to lowercase
+-   We sanitized the data by converting all text types to lowercase
 
 ```{r echo=FALSE}
 #| label: more-normalization
@@ -237,7 +275,7 @@ weather_combined <- weather_combined |> rename_with(tolower) |>
   rename(location = name, date = datetime) |> distinct()
 ```
 
--   We then join -
+-   We then joined -
 
     -   The weather and soccer data on \[date, location\]
 
@@ -287,7 +325,7 @@ soccer_pre <- soccer_pre |>
   left_join(betting_odds_combined, by = c("date", "hometeam", "awayteam"))
 ```
 
--   Saving the pre-processed and normalized dataset
+-   This gave us the final output - our merged main data-set
 
 ```{r echo=FALSE}
 #| label: final-cleanup
@@ -311,8 +349,6 @@ final_data_path <- normalizePath(final_data_path)
 write_csv(soccer_pre, final_data_path)
 ```
 
--   This completes our data pre-processing part
-
 ## EDA 
 
 -   One of the key challenges was to extend and merge the data-sets together into one main data source to power our Shiny App
@@ -324,4 +360,57 @@ write_csv(soccer_pre, final_data_path)
 
     -   Odds - Fractional - Represent the fractional payout - Example - 5 or 5/1 means 5 times the wagered amount would be paid out if the bet is won
 
--   
+-   Our initial analysis included the following -
+
+    -   Basic visualizations to check the spread of data
+
+    -   Find a visually apparent correlation between betting odds and match outcomes
+
+        -   We were able to establish that in most cases (\~85% of the times) - The match winner is the team with better odds
+
+-   We then examined the link between weather data and it's effect on match outcomes
+
+    -   We assume betting odds to factor in weather forecasts
+
+    -   While the weather data does not have a normalizing effect on betting odds
+
+        -   We observed that an upset (team with worse odds winning) is more likely in extreme weather conditions especially rain
+
+## Visualizations 
+
+We shall now discuss our observations based on the visualizations (with one example per visualization). A detailed, interactive view can be found in the Final Shiny folder which contains the Shiny App. Please run it to view the dashboard
+
+1.  **Betting Odds vs Match Outcomes**
+    -   ![](images/clipboard-489080523.png)
+        -   Chart Description
+            -   Odds on the y-axis
+            -   Individual matches on the x-axis
+            -   Vertical red shaded strips represent extreme weather
+        -   For any given match, if the selected team is below the opponent team on the lollipop chart, it means the selected team had better pre-match odds
+        -   The color of the stick represents the result, a green stick represents the selected team winning that match, red represents a loss
+    -   From the above visualization, we see that betting odds are indeed a good predictor of match outcomes, with green sticks being more common where the selected team has better odds (selected team is below the opponent)
+2.  **Referee Bias**
+    -   ![](images/clipboard-3549485583.png){width="418"}
+        -   Here we have a simple pie chart representing the fouls and cards awarded by a referee to the home team and the away team (across all the games they refereed)
+        -   We did not find a large skew across decisions, thereby negating the possibility of explicit bias, but we did observe some referees were harsher to away teams overall, but that could just be the state of play - We were not able to find conclusive evidence.
+3.  Direct Weather Impact on Match Outcomes
+    -   ![](images/clipboard-3275463866.png)
+        -   This stacked bar represents the distribution of match results across a temperature range (on the x-axis)
+        -   We observe that we see more draws in extreme weather conditions (higher and lower)
+            -   This could be anecdotally attributed to extreme weather slowing the pace of the game down
+
+## Conclusion and Future Work
+
+-   Visual evidence of correlation between betting odds and match results has been observed
+
+-   Referee bias was not conclusively found in this analysis
+
+-   This is not a perfectly quantitative analysis as we were more focused on visualizations
+
+-   Future work could include a more quantitative, stats-heavy approach to answering these questions -
+
+    -   Peform hypothesis testing
+
+    -   Quantitative Modelling of the dsata
+
+    -   Classification systems to predict match outcomes
