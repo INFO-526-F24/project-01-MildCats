@@ -17,6 +17,28 @@ execute:
   echo: false
 ---
 
+```{r echo=FALSE}
+#| label: Setup
+
+if (!require("pacman")) 
+  install.packages("pacman")
+
+# use this line for installing/loading
+suppressMessages(suppressWarnings(pacman::p_load(here,
+                                                 readr,
+                                                 lubridate,
+                                                 readxl,
+                                                 dplyr,
+                                                 writexl)))
+         
+suppressMessages(suppressWarnings(
+  devtools::install_github("tidyverse/dsbox")
+))
+
+# Setting theme for ggplot2
+ggplot2::theme_set(ggplot2::theme_minimal(base_size = 14))
+```
+
 ## Abstract
 
 This project focuses on analyzing and visualizing data from the English Premier League (soccer), covering the 2021-2023 seasons. Using match data as the core data-set, the analysis incorporates additional weather and betting odds data to explore various factors that may influence game outcomes.
@@ -25,9 +47,9 @@ We aim to uncover patterns such as home ground advantage, the impact of weather 
 
 The project prioritizes accessibility by presenting the findings in an engaging and easy-to-understand format for a wider audience.
 
-## Proposed App Layout 
+## Proposed App Layout
 
-#### Descriptive Statistics 
+#### Descriptive Statistics
 
 ![](images/layout-1.jpeg){fig-align="center" width="500"}
 
@@ -42,3 +64,264 @@ The project prioritizes accessibility by presenting the findings in an engaging 
 ![](images/layout-2.jpeg){fig-align="center" width="520"}
 
 -   In this section, we aim to address our research questions. While we are still working on formulating the actual visualizations and analysis here, the crux of our efforts is captured in our research questions, which are detailed in the **proposal**.
+
+## Data Preprocessing
+
+We started off with 3 distinct data sources as mentioned in our proposal -
+
+-   Match Data
+
+-   Weather Data
+
+-   Betting Odds Data
+
+Since all these data-sets were of different dimensions and different time frames, we first had to pre-process, transform and merge these data-sets into a main data-set which would power our Shiny App.
+
+##### Collect Source Data
+
+```{r echo=FALSE}
+#| label: collect-source-data
+
+raw_data_path <- file.path(getwd(), "data" , "raw_data")
+preproc_data_path <- file.path(getwd(), "data", "preproc_data")
+
+# Normalize the path to make sure it's in the correct format
+# here() was not resolving the absolute path, so had to use getwd()
+raw_data_path <- normalizePath(raw_data_path)
+preproc_data_path <- normalizePath(preproc_data_path)
+
+# Create the preprocessed directory if it doesn't exist
+if (!dir.exists(preproc_data_path)) {
+  dir.create(preproc_data_path)
+}
+
+# Get a list of all CSV and Excel files in the raw_data path
+
+file_list <- list.files(path = raw_data_path, pattern = "\\.(csv|xlsx)$", full.names = TRUE)
+```
+
+##### Normalizing Data
+
+```{r echo=FALSE}
+#| label: data-normalization
+
+
+normalize_date <- function(file) {
+  # Check the file extension and load the data accordingly
+  if (grepl("\\.csv$", file)) {
+    data <- read_csv(file)
+  } else if (grepl("\\.xlsx$", file)) {
+    data <- read_excel(file)
+  } else {
+    stop("Unsupported file format")
+  }
+  
+  # Find columns containing 'date' or 'datetime' in their names
+  date_columns <- names(data)[grepl("date|datetime", tolower(names(data)))]
+  
+  # Convert identified date columns to YYYY-MM-DD format, checking DD-MM-YYYY first
+  if (length(date_columns) > 0) {
+    data <- data |>
+      mutate(across(all_of(date_columns), ~ {
+        # First, try parsing with DD-MM-YYYY explicitly
+        parsed_date <- as.Date(., format = "%d-%m-%Y")
+        
+        # For any remaining NA values, try additional formats
+        parsed_date <- ifelse(
+          is.na(parsed_date),
+          as.Date(., tryFormats = c("%Y-%m-%d", "%m-%d-%Y", "%d/%m/%Y", "%m/%d/%Y")),
+          parsed_date
+        )
+        
+        # Ensure parsed_date is reasonable (e.g., year >= 1900), else return NA as Date
+        parsed_date <- ifelse(!is.na(parsed_date) & year(parsed_date) >= 1900, parsed_date, as.Date(NA))
+        
+        # Convert to standard YYYY-MM-DD format explicitly
+        as.Date(parsed_date, format = "%Y-%m-%d")
+      }))
+  } else {
+    warning(paste("No date column found in", file))
+  }
+  
+  # Return the processed data
+  return(data)
+}
+```
+
+##### Process Dates
+
+```{r echo=FALSE}
+#| label: process-dates
+
+for (file in file_list) {
+  # Normalize dates in the data
+  processed_data <- normalize_date(file)
+  
+  # Get the original filename
+  filename <- paste0("date_norm_", basename(file))
+  
+  # Define the path to save the processed file
+  save_path <- file.path(preproc_data_path, filename)
+  
+  # Save the processed data
+  if (grepl("\\.csv$", file)) {
+    write_csv(processed_data, save_path)
+  } else if (grepl("\\.xlsx$", file)) {
+    write_xlsx(processed_data, save_path)
+  }
+}
+
+```
+
+##### Append, Join and Merge Datasets
+
+-   We first append individual datasets of the same type to create a unified dataset that spans from 21-23
+
+```{r echo=FALSE}
+#| label: append-data
+
+preproc_data_path <- file.path(getwd(), "data", "preproc_data")
+preproc_data_path <- normalizePath(preproc_data_path)
+
+preproc_file_list <- list.files(preproc_data_path, pattern = "\\.(csv|xlsx)$", full.names = TRUE)
+
+# Collect all CSV and Excel files in the directory
+file_list <- list.files(preproc_data_path, pattern = "\\.(csv|xlsx)$", full.names = TRUE)
+
+# Initialize an empty list to store loaded data by type
+preproc_data_list <- list(betting_odds = list(), weather = list(), soccer = list())
+
+# Load each file into the appropriate list based on type
+for (file in file_list) {
+  data <- if (grepl("\\.csv$", file)) read_csv(file) else read_excel(file)
+  
+  if (grepl("betting_odds", file)) {
+    preproc_data_list$betting_odds <- c(preproc_data_list$betting_odds, list(data))
+  } else if (grepl("merged_weather|weather_data", file)) {
+    preproc_data_list$weather <- c(preproc_data_list$weather, list(data))
+  } else if (grepl("soccer", file)) {
+    preproc_data_list$soccer <- c(preproc_data_list$soccer, list(data))
+  }
+}
+
+if (length(preproc_data_list$betting_odds) > 0) {
+  betting_odds_combined <- bind_rows(preproc_data_list$betting_odds)
+} else {
+  betting_odds_combined <- data.frame() 
+}
+
+
+if (length(preproc_data_list$weather) > 0) {
+  weather_combined <- bind_rows(preproc_data_list$weather)
+} else {
+  betting_odds_combined <- data.frame()
+}
+
+if (length(preproc_data_list$soccer) > 0) {
+  soccer_combined <- bind_rows(preproc_data_list$soccer)
+} else {
+  soccer_combined <- data.frame()
+}
+
+
+```
+
+-   Normalize column names by converting all to lowercase
+
+```{r echo=FALSE}
+#| label: more-normalization
+
+soccer_combined <- soccer_combined |> rename_with(tolower) |> distinct()
+betting_odds_combined <- betting_odds_combined |> rename_with(tolower) |> distinct()
+weather_combined <- weather_combined |> rename_with(tolower) |>
+  rename(location = name, date = datetime) |> distinct()
+```
+
+-   We then join -
+
+    -   The weather and soccer data on \[date, location\]
+
+    -   The combined data with betting odds on \[date, HomeTeam, AwayTeam\]
+
+```{r echo=FALSE}
+#| label: merge-data
+
+
+# Normalize in soccer_combined
+soccer_combined <- soccer_combined |>
+  rename_with(tolower) |>
+  mutate(location = ifelse(tolower(location) == "newcastle upon tyne", "Newcastle", location)) |>
+  distinct()
+
+# Normalize in betting_odds_combined
+betting_odds_combined <- betting_odds_combined |>
+  rename_with(tolower) |>
+  mutate(hometeam = ifelse(tolower(hometeam) == "newcastle upon tyne", "Newcastle", hometeam),
+         awayteam = ifelse(tolower(awayteam) == "newcastle upon tyne", "Newcastle", awayteam)) |>
+  distinct()
+
+# Normalize in weather_combined
+weather_combined <- weather_combined |>
+  rename_with(tolower) |>
+  mutate(location = ifelse(tolower(location) == "newcastle upon tyne", "Newcastle", location)) |>
+  distinct()
+```
+
+-   We then combined the match data and weather data
+
+```{r echo=FALSE}
+#| label: join-weather-and-match-data
+
+# Ensure that date and location columns are consistent in both datasets
+soccer_combined <- soccer_combined |>
+  mutate(date = as.Date(date), location = as.character(location))
+
+weather_combined <- weather_combined |>
+  mutate(date = as.Date(date), location = as.character(location))
+
+# Perform the left join with only matching rows on date and location
+soccer_pre <- soccer_combined |>
+  left_join(weather_combined, by = c("date", "location"))
+
+soccer_pre <- soccer_pre |>
+  left_join(betting_odds_combined, by = c("date", "hometeam", "awayteam"))
+```
+
+-   Saving the pre-processed and normalized dataset
+
+```{r echo=FALSE}
+#| label: final-cleanup
+
+# Removing duplicate columns
+
+# Identify columns with .x and .y suffixes
+duplicate_columns <- unique(gsub("\\.x$|\\.y$", "", names(soccer_pre)[grepl("\\.x$|\\.y$", names(soccer_pre))]))
+
+# Condense columns by combining .x and .y versions, then removing suffixes
+for (col in duplicate_columns) {
+  soccer_pre[[col]] <- coalesce(soccer_pre[[paste0(col, ".x")]], soccer_pre[[paste0(col, ".y")]])
+  soccer_pre <- soccer_pre %>% select(-matches(paste0("^", col, "\\.(x|y)$")))
+}
+
+
+final_data_path = file.path(getwd(), "data", "soccer_main.csv")
+  
+final_data_path <- normalizePath(final_data_path)  
+  
+write_csv(soccer_pre, final_data_path)
+```
+
+-   This completes our data pre-processing part
+
+## EDA 
+
+-   One of the key challenges was to extend and merge the data-sets together into one main data source to power our Shiny App
+
+```{=html}
+<!-- -->
+```
+-   While the rest of the data is self explanatory, the betting odds are the only esoteric variables we have in our dataset
+
+    -   Odds - Fractional - Represent the fractional payout - Example - 5 or 5/1 means 5 times the wagered amount would be paid out if the bet is won
+
+-   
