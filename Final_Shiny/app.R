@@ -292,9 +292,18 @@ ui <- fluidPage(
             plotOutput("odds_evolution_plot")
         )
       )
+    ),
+    tabPanel(
+      "Raw",
+      fluidRow(
+        column(12,
+               DTOutput("raw_data_table")
+        )
+      )
     )
   )
 )
+
 
 # Define server logic
 server <- function(input, output, session) {
@@ -320,6 +329,7 @@ server <- function(input, output, session) {
       filter = "top"
     )
   })
+  
   # Function to plot referee stats
   plot_referee_stats <- function(referee_name) {
     referee_name <- gsub(" ", "_", referee_name)
