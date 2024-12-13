@@ -1,0 +1,230 @@
+---
+title: "final_draft"
+output: html_document
+date: "2024-12-11"
+---
+
+```{r setup, include=FALSE}
+library(pacman)
+pacman::p_load(readr, ggplot2, dplyr, shiny, rlang)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r imports}
+data <- read_csv("data/soccer_main.csv")
+selected_columns <- data %>% select("temp", "dew", "humidity", "precip", "windgust", "windspeed", "solarradiation")
+columns <- c("temp", "dew", "humidity", "precip", "windgust", "windspeed", "solarradiation")
+for (col in columns) {
+  Q1 <- quantile(selected_columns[[col]], 0.2, 'na.rm' = TRUE)
+  Q3 <- quantile(selected_columns[[col]], 0.8, 'na.rm' = TRUE)
+  
+  dummy_col_name <- paste0(col, " extreme")
+  data[[dummy_col_name]] <- ifelse(selected_columns[[col]] < Q1 | selected_columns[[col]] > Q3, 1, 0)
+}
+
+
+
+```
+
+
+```{r imports}
+
+```
+
+
+```{r subdata}
+vars <- c("date", "hometeam", "awayteam", "b365h", "b365a", "ftr", "temp extreme", "dew extreme", "humidity extreme", "precip extreme", "windgust extreme", "windspeed extreme", "solarradiation extreme")
+weather_vars = c("temp extreme", "dew extreme", "humidity extreme", "precip extreme", "windgust extreme", "windspeed extreme", "solarradiation extreme")
+
+subdata <- data %>% select(vars)
+subdata <- subdata %>%
+  mutate(
+    team_winner = ifelse(ftr == 'H', hometeam, awayteam)
+  )
+for (col in weather_vars) {
+  subdata[[col]] <- subdata[[col]] > 0
+}
+df <- subdata
+
+teams <- unique(df$awayteam)
+
+```
+
+
+```{r team schedule}
+result <- lapply(teams, function(x) {
+  df[df$hometeam == x | df$awayteam == x, ]
+})
+
+names(result) <- teams
+
+opponents <- result
+
+```
+
+
+```{r team odds}
+for (i in seq_along(opponents)) {
+
+  
+  opponents[[i]]$team_odds <- NA
+  opponents[[i]]$opponent_odds <- NA
+  opponents[[i]]$opponent <- NA
+  
+  opponents[[i]]$opponent <- ifelse(
+    opponents[[i]]$hometeam == teams[[i]],
+    opponents[[i]]$awayteam,
+    opponents[[i]]$hometeam
+  )
+  
+  opponents[[i]]$team_odds <- ifelse(
+    opponents[[i]]$hometeam == teams[[i]],  
+    opponents[[i]]$b365h,                  
+    opponents[[i]]$b365a                   
+  )
+  
+  opponents[[i]]$opponent_odds <- ifelse(
+    opponents[[i]]$hometeam == teams[[i]],  
+    opponents[[i]]$b365a,                  
+    opponents[[i]]$b365h                   
+  )
+}
+
+opponents
+
+```
+
+
+
+
+
+```{r plots}
+plot_opponent <- function(team_name, opponents, teams, temp_outlier_col) {
+  
+  weather_colors <- c(
+    "temp extreme" = "red", "dew extreme" = "lightblue",
+    "humidity extreme" = "gray", "precip extreme" = "darkblue",
+    "windgust extreme" = "green", "windspeed extreme" = "black",
+    "solarradiation extreme" = "orange"
+  )
+  
+  team_colors <- c(
+    "Arsenal" = "red", "Leeds" = "blue", "Brighton" = "white",
+    "Crystal Palace" = "#A7A5A6", "Southampton" = "#130C0E",
+    "Wolves" = "yellow", "Aston Villa" = "#670E36", "Liverpool" = "#00B2A9",
+    "West Ham" = "#7A263A", "Man City"  = "gold", "Burnley" = "#6C1D45",
+    "Newcastle" = "black", "Brentford" = "orange", "Everton" = "#003399",
+    "Norwich" = "#00A650", "Watford" = "#ED2127", "Man United" = "#DA291C",
+    "Tottenham" = "#132257", "Chelsea" = "#034694", "Leicester" = "#003090",
+    "Nottingham" = "pink", "Bournemouth" = "#c91318", "Fulham" = "#A24857"
+  )
+  
+  if (!team_name %in% names(opponents)) {
+    stop(paste("Team", team_name, "not found in the opponents list."))
+  }
+  
+  data <- opponents[[team_name]]
+  
+  data$date <- as.Date(data$date)
+  
+  if (!temp_outlier_col %in% names(data)) {
+    stop(paste("Column", temp_outlier_col, "does not exist in the dataset for team", team_name, "."))
+  }
+  
+  fill_color <- weather_colors[[temp_outlier_col]]
+  seg_color <- ifelse(data$team_winner == team_name, "green", "red")
+  
+  unique_opponents <- unique(data$opponent)
+  opponent_colors <- team_colors[unique_opponents]
+  
+  ggplot(data, aes(x = date)) +
+    geom_segment(aes(
+      xend = date,
+      y = team_odds,
+      yend = opponent_odds
+    ), size = 1.5, color = seg_color) +
+    geom_point(aes(y = team_odds, color = "Team"), size = 1.5) +
+    geom_point(aes(y = opponent_odds, color = opponent), size = 1.5) +
+    geom_rect(
+      data = filter(data, !!rlang::sym(temp_outlier_col)),
+      aes(
+        xmin = date - 2,
+        xmax = date + 2,
+        ymin = -Inf,
+        ymax = Inf
+      ),
+      fill = fill_color, alpha = 0.2, inherit.aes = FALSE
+    ) +
+    scale_color_manual(
+      values = c("Team" = team_colors[[team_name]], opponent_colors)
+    ) +
+    labs(
+      title = paste("Match Outcomes for", team_name),
+      x = "Date",
+      y = "Odds",
+      color = "Legend"
+    ) +
+    theme_minimal() +
+    theme(aspect.ratio = 0.4)
+}
+
+plot_opponent("Arsenal", opponents, teams, temp_outlier_col = "temp extreme")
+
+```
+
+
+
+```{r plots}
+
+ui <- fluidPage(
+  titlePanel("Match Outcomes Visualization"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(
+        "team_name",
+        "Select Team:",
+        choices = NULL, 
+        selected = NULL
+      ),
+      selectInput(
+        "temp_outlier_col",
+        "Select extreme weather condition:",
+        choices = c(
+          "temp extreme", "dew extreme", "humidity extreme", 
+          "precip extreme", "windgust extreme", "windspeed extreme", 
+          "solarradiation extreme"
+        ),
+        selected = "temp extreme" 
+      )
+    ),
+    
+    mainPanel(
+      plotOutput("opponentPlot", width = "1000px", height = "500px")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  observe({
+    updateSelectInput(session, "team_name", choices = names(opponents))
+  })
+  
+  output$opponentPlot <- renderPlot({
+    req(input$team_name, input$temp_outlier_col)  
+    
+    plot_opponent(
+      team_name = input$team_name,
+      opponents = opponents,
+      teams = teams,
+      temp_outlier_col = input$temp_outlier_col
+    )
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+
+
+
+```
