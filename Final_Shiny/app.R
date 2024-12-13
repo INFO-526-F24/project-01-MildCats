@@ -3,7 +3,7 @@ library(shiny)
 library(shinythemes)
 library(DT)
 library(pacman)
-pacman::p_load(readr, ggplot2, dplyr, shiny, rlang, here, ggimage, curl, rsvg)
+pacman::p_load(readr, ggplot2, dplyr, shiny, rlang, here, ggimage, curl, rsvg, stringr)
 
 # Load the dataset
 soccer_data <- read_csv(here("data", "soccer_main.csv"))
@@ -172,11 +172,11 @@ plot_opponent <- function(team_name, opponents, teams, temp_outlier_col, logo_ur
     geom_image(aes(
       y = team_odds,
       image = team_logo
-    ), size = 0.03) +  # Adjust size as necessary
+    ), size = 0.04) +  # Adjust size as necessary
     geom_image(aes(
       y = opponent_odds,
       image = opponent_logo
-    ), size = 0.03) +  # Adjust size as necessary
+    ), size = 0.04) +  # Adjust size as necessary
     geom_rect(
       data = filter(data, !!rlang::sym(temp_outlier_col)),
       aes(
@@ -195,7 +195,7 @@ plot_opponent <- function(team_name, opponents, teams, temp_outlier_col, logo_ur
     theme_minimal() +
     theme(
       aspect.ratio = 0.4,
-      plot.title = element_text(hjust = 0.5)  # Center align the title
+      plot.title = element_text(hjust = 0.5, size = 20)  # Center align the title
     )
 }
 
@@ -297,34 +297,37 @@ server <- function(input, output, session) {
       )
     )
     
+    # Add positions for text labels within the segments
+    home_stats$ypos <- cumsum(home_stats$proportion) - home_stats$proportion / 2
+    away_stats$ypos <- cumsum(away_stats$proportion) - away_stats$proportion / 2
+    
     # Plot for Home Team
     p1 <- ggplot(home_stats, aes(x = "", y = proportion, fill = category)) +
       geom_bar(stat = "identity", width = 1) +
       coord_polar(theta = "y") +
-      labs(title = paste0("Home Team: ", input$referee)) +
+      labs(title = paste0("Home Team: ")) +
       theme_void() +
-      scale_fill_manual(values = c("red", "yellow")) +
+      scale_fill_manual(values = c("#F05039", "#1F449C")) +
       geom_text(
-        aes(y = cumsum(proportion) - proportion / 2, label = paste0(round(proportion, 2), "%")),
-        size = 4
+        aes(y = ypos, label = paste0(round(proportion, 2), "%")),
+        size = 4, color = "black"
       )
     
     # Plot for Away Team
     p2 <- ggplot(away_stats, aes(x = "", y = proportion, fill = category)) +
       geom_bar(stat = "identity", width = 1) +
       coord_polar(theta = "y") +
-      labs(title = paste0("Away Team: ", input$referee)) +
+      labs(title = paste0("Away Team: ")) +
       theme_void() +
-      scale_fill_manual(values = c("red", "yellow")) +
+      scale_fill_manual(values = c("#C99738", "#3D65A5")) +
       geom_text(
-        aes(y = cumsum(proportion) - proportion / 2, label = paste0(round(proportion, 2), "%")),
-        size = 4
+        aes(y = ypos, label = paste0(round(proportion, 2), "%")),
+        size = 4, color = "black"
       )
     
     # Combine and return plots
-    grid.arrange(p1, p2, ncol = 2, top = paste0("Card and Foul Distribution for Referee: ", input$referee))
-  }
-  
+    grid.arrange(p1, p2, ncol = 2, top = paste0("Card and Foul Distribution for Referee: ", referee_name))
+  }  
   # Render the pie chart
   output$pieChart <- renderPlot({
     req(input$referee)  # Ensure referee input is not null
