@@ -3,7 +3,27 @@ library(shiny)
 library(shinythemes)
 library(DT)
 library(pacman)
-pacman::p_load(readr, ggplot2, dplyr, shiny, rlang, here, ggimage, curl, rsvg, stringr)
+pacman::p_load(readr,
+               ggplot2,
+               dplyr,
+               shiny,
+               rlang,
+               here,
+               ggimage,
+               curl,
+               rsvg,
+               stringr,
+               dsbox,
+               ggridges,
+               tidyverse,
+               fs,
+               janitor,
+               lubridate,
+               formatR,
+               scales,
+               ggforce,
+               palmerpenguins,
+               gridExtra)
 
 # Load the dataset
 soccer_data <- read_csv(here("data", "soccer_main.csv"))
