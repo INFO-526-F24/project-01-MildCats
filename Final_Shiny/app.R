@@ -358,64 +358,71 @@ server <- function(input, output, session) {
   
   # Function to plot referee stats
   plot_referee_stats <- function(referee_name) {
-    referee_name <- gsub(" ", "_", referee_name)
-    
+    referee_name_upd <- gsub(" ", "_", referee_name)
     # Filter data for the specific referee
-    referee_data <- grouped_df_used %>%
-      filter(referee == referee_name)
-    
+    referee_name_upd <- grouped_df_used |>
+      filter(referee == referee_name_upd)
     # Calculate percentages for home and away teams
     home_stats <- data.frame(
       category = c("Cards", "Fouls"),
       proportion = c(
-        (referee_data$hr + referee_data$hy) / referee_data$hf * 100,
-        100 - (referee_data$hr + referee_data$hy) / referee_data$hf * 100
+        (referee_name_upd$hr + referee_name_upd$hy) / referee_name_upd$hf * 100,
+        100 - (referee_name_upd$hr + referee_name_upd$hy) / referee_name_upd$hf * 100
       )
     )
     away_stats <- data.frame(
       category = c("Cards", "Fouls"),
       proportion = c(
-        (referee_data$ar + referee_data$ay) / referee_data$af * 100,
-        100 - (referee_data$ar + referee_data$ay) / referee_data$af * 100
+        (referee_name_upd$ar + referee_name_upd$ay) / referee_name_upd$af * 100,
+        100 - (referee_name_upd$ar + referee_name_upd$ay) / referee_name_upd$af * 100
       )
     )
-    
+    print(home_stats$proportion[1])
+    print(away_stats$proportion[1])
+    percent_increase <- ((away_stats$proportion[1] - home_stats$proportion[1]) / home_stats$proportion[1]) * 100
+    percent_increase <- paste0(round(percent_increase))
     # Add positions for text labels within the segments
     home_stats$ypos <- cumsum(home_stats$proportion) - home_stats$proportion / 2
     away_stats$ypos <- cumsum(away_stats$proportion) - away_stats$proportion / 2
-    
     # Plot for Home Team
     p1 <- ggplot(home_stats, aes(x = "", y = proportion, fill = category)) +
       geom_bar(stat = "identity", width = 1) +
       coord_polar(theta = "y") +
-      labs(title = paste0("Home Team: ")) +
+      # labs(title = paste0("      Home Team")) +
       theme_void() +
       scale_fill_manual(values = c("#C99738", "#3D65A5")) +
       geom_text(
         aes(y = ypos, label = paste0(round(proportion, 2), "%")),
-        size = 4, color = "black"
-      )
-    
+        size = 5, color = "white"
+      ) +
+      labs(fill = "Home team")
     # Plot for Away Team
     p2 <- ggplot(away_stats, aes(x = "", y = proportion, fill = category)) +
       geom_bar(stat = "identity", width = 1) +
       coord_polar(theta = "y") +
-      labs(title = paste0("Away Team: ")) +
+      #labs(title = paste0("           Away Team")) +
       theme_void() +
       scale_fill_manual(values = c("#C99738", "#3D65A5")) +
       geom_text(
         aes(y = ypos, label = paste0(round(proportion, 2), "%")),
-        size = 4, color = "black"
-      )
-    
+        size = 5, color = "white"
+      ) + labs(fill = "Away team")
     # Combine and return plots
-    grid.arrange(p1, p2, ncol = 2, top = paste0("Card and Foul Distribution for Referee: ", referee_name))
-  }  
+    #grid.arrange(p1, p2, ncol = 2, top = paste0("Card and Foul Distribution for Referee: ", referee_name))
+    bottom = paste0("There is a ", percent_increase,"% chance of the away team receiving more cards than the home team.")
+    top = paste0("Card and Foul Distribution for Referee: ", referee_name)
+    par(mar = c(12, 12, 12, 12) + -8 )  # Adjust bottom margin
+    grid.arrange(p1, p2, ncol = 2)
+    mtext(bottom, side = 1, line = 2,cex = 1.5)
+    mtext(top, side = 3, line = 2,cex = 1.5)
+  }
   # Render the pie chart
   output$pieChart <- renderPlot({
     req(input$referee)  # Ensure referee input is not null
     plot_referee_stats(input$referee)
   })
+  
+  
   # New cold weather impact visualization
   output$cold_impact_plot <- renderPlot({
     tryCatch({
