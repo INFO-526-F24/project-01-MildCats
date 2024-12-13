@@ -11,9 +11,21 @@ soccer_data <- read.csv("data/soccer_main.csv")
 # Convert temperature to numeric and create temperature bins
 soccer_data$temp <- as.numeric(soccer_data$temp)
 soccer_data$temp_category <- cut(soccer_data$temp, 
-                                 breaks = c(-Inf, 10, 15, 20, Inf),
-                                 labels = c("Cold (<10°C)", "Cool (10-15°C)", 
-                                            "Mild (15-20°C)", "Warm (>20°C)"))
+                                 breaks = c(-Inf, 5, 10, 15, 20, Inf),
+                                 labels = c("Very Cold (<5°C)", "Cold (5-10°C)", 
+                                            "Mild (10-15°C)", "Warm (15-20°C)", 
+                                            "Hot (>20°C)"))
+
+# Calculate draw probabilities for each temperature point
+draw_prob_by_temp <- soccer_data %>%
+  group_by(temp) %>%
+  summarise(
+    matches = n(),
+    draws = sum(ftr == "D"),
+    draw_prob = draws / matches,
+    avg_prematch_odds = mean(b365d, na.rm = TRUE)  # only use pre-match odds
+  ) %>%
+  filter(matches >= 5)  # Filter out temperatures with too few matches
 
 # UI
 ui <- dashboardPage(
@@ -21,9 +33,7 @@ ui <- dashboardPage(
   
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Overview", tabName = "overview", icon = icon("dashboard")),
-      menuItem("Detailed Analysis", tabName = "detailed", icon = icon("chart-line")),
-      menuItem("Betting Analysis", tabName = "betting", icon = icon("money-bill"))
+      menuItem("Overview", tabName = "overview", icon = icon("dashboard"))
     )
   ),
   
@@ -32,55 +42,22 @@ ui <- dashboardPage(
       # Overview Tab
       tabItem(tabName = "overview",
               fluidRow(
-                box(
-                  title = "Temperature Distribution by Match Outcome",
-                  status = "primary",
-                  plotOutput("temp_outcome_plot")
-                ),
-                box(
-                  title = "Draw Percentage by Temperature Category",
-                  status = "info",
-                  plotOutput("draw_temp_plot")
+                box(width = 12,
+                    title = "Cold Weather Impact on Draw Probability",
+                    status = "primary",
+                    plotOutput("cold_impact_plot", height = "400px")
                 )
               ),
               fluidRow(
-                box(
-                  title = "Summary Statistics",
-                  status = "success",
-                  tableOutput("summary_stats")
-                )
-              )
-      ),
-      
-      # Detailed Analysis Tab
-      tabItem(tabName = "detailed",
-              fluidRow(
-                box(
-                  title = "Temperature Range Filter",
-                  sliderInput("temp_range", "Select Temperature Range (°C):",
-                              min = min(soccer_data$temp, na.rm = TRUE),
-                              max = max(soccer_data$temp, na.rm = TRUE),
-                              value = c(0, 30))
-                )
-              ),
-              fluidRow(
-                box(
-                  title = "Filtered Match Results",
-                  DTOutput("filtered_results")
-                )
-              )
-      ),
-      
-      # Betting Analysis Tab
-      tabItem(tabName = "betting",
-              fluidRow(
-                box(
-                  title = "Average Draw Odds by Temperature",
-                  plotOutput("odds_temp_plot")
+                box(width = 6,
+                    title = "Draw Probability vs Temperature",
+                    status = "info",
+                    plotOutput("draw_prob_plot")
                 ),
-                box(
-                  title = "Betting Odds Analysis",
-                  tableOutput("odds_analysis")
+                box(width = 6,
+                    title = "Betting Odds Evolution (Pre-match vs Live)",
+                    status = "warning",
+                    plotOutput("odds_evolution_plot")
                 )
               )
       )
@@ -91,68 +68,125 @@ ui <- dashboardPage(
 # Server
 server <- function(input, output) {
   
-  # Temperature vs Outcome Plot
-  output$temp_outcome_plot <- renderPlot({
-    ggplot(soccer_data, aes(x = temp, fill = ftr)) +
-      geom_density(alpha = 0.5) +
-      labs(x = "Temperature (°C)", y = "Density", fill = "Match Result") +
-      theme_minimal()
+  # New cold weather impact visualization
+  output$cold_impact_plot <- renderPlot({
+    tryCatch({
+      # Create binned temperature data
+      binned_data <- soccer_data %>%
+        mutate(temp_bin = cut(temp, breaks = seq(min(temp, na.rm = TRUE), 
+                                                 max(temp, na.rm = TRUE), 
+                                                 length.out = 20))) %>%
+        group_by(temp_bin) %>%
+        summarise(
+          avg_temp = mean(temp, na.rm = TRUE),
+          draw_prop = mean(ftr == "D", na.rm = TRUE),
+          total_games = n()
+        ) %>%
+        filter(total_games >= 5)  # Filter bins with too few games
+      
+      # Create the plot
+      ggplot() +
+        # Add stacked bar chart for all outcomes
+        geom_bar(data = soccer_data, 
+                 aes(x = temp, fill = ftr), 
+                 position = "fill", 
+                 alpha = 0.5) +
+        # Add draw probability line (zig-zag)
+        geom_line(data = binned_data,
+                  aes(x = avg_temp, y = draw_prop, color = "Observed Draw Rate"),
+                  size = 1.5) +
+        # Add confidence interval (smooth)
+        geom_smooth(data = binned_data,
+                    aes(x = avg_temp, y = draw_prop, color = "Smoothed Trend"),
+                    method = "loess",
+                    fill = "lightblue",
+                    alpha = 0.3) +
+        # Customize appearance
+        scale_fill_manual(values = c("H" = "#3498db", 
+                                     "D" = "#e74c3c", 
+                                     "A" = "#2ecc71"),
+                          labels = c("Home Win", "Draw", "Away Win")) +
+        scale_color_manual(values = c("Observed Draw Rate" = "#e74c3c",
+                                      "Smoothed Trend" = "#3498db")) +
+        scale_y_continuous(labels = scales::percent_format()) +
+        labs(x = "Temperature (°C)", 
+             y = "Proportion of Outcomes",
+             title = "Match Outcomes and Draw Probability by Temperature",
+             subtitle = "Red line shows observed draw rate, blue line shows smoothed trend",
+             fill = "Match Result",
+             color = "Draw Probability") +
+        theme_minimal() +
+        theme(
+          plot.title = element_text(size = 16, face = "bold"),
+          plot.subtitle = element_text(size = 12, color = "darkgray"),
+          legend.position = "bottom",
+          legend.box = "vertical",
+          legend.margin = margin()
+        )
+    }, error = function(e) {
+      print(paste("Error in cold_impact_plot:", e$message))
+      return(NULL)
+    })
   })
   
-  # Draw Percentage by Temperature Plot
-  output$draw_temp_plot <- renderPlot({
-    soccer_data %>%
-      group_by(temp_category) %>%
-      summarise(
-        draw_pct = mean(ftr == "D") * 100,
-        n = n()
-      ) %>%
-      ggplot(aes(x = temp_category, y = draw_pct)) +
-      geom_bar(stat = "identity", fill = "steelblue") +
-      labs(x = "Temperature Category", y = "Draw Percentage (%)") +
-      theme_minimal()
+  # Draw probability plot
+  output$draw_prob_plot <- renderPlot({
+    tryCatch({
+      ggplot(draw_prob_by_temp, aes(x = temp, y = draw_prob)) +
+        geom_point(alpha = 0.5, color = "#e74c3c") +
+        geom_smooth(method = "loess", color = "#c0392b", se = TRUE) +
+        geom_hline(yintercept = mean(soccer_data$ftr == "D"), 
+                   linetype = "dashed", color = "gray50") +
+        scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+        labs(x = "Temperature (°C)", 
+             y = "Draw Probability",
+             title = "Draw Probability vs Temperature") +
+        theme_minimal()
+    }, error = function(e) {
+      print(paste("Error in draw_prob_plot:", e$message))
+      return(NULL)
+    })
   })
   
-  # Summary Statistics
-  output$summary_stats <- renderTable({
-    soccer_data %>%
-      group_by(temp_category) %>%
-      summarise(
-        total_matches = n(),
-        draws = sum(ftr == "D"),
-        draw_percentage = round(mean(ftr == "D") * 100, 2),
-        avg_temp = round(mean(temp, na.rm = TRUE), 1)
-      )
-  })
-  
-  # Filtered Results
-  output$filtered_results <- renderDT({
-    soccer_data %>%
-      filter(temp >= input$temp_range[1], temp <= input$temp_range[2]) %>%
-      select(date, hometeam, awayteam, temp, ftr, b365d) %>%
-      datatable()
-  })
-  
-  # Odds vs Temperature Plot
-  output$odds_temp_plot <- renderPlot({
-    ggplot(soccer_data, aes(x = temp, y = b365d)) +
-      geom_point(alpha = 0.5) +
-      geom_smooth(method = "loess") +
-      labs(x = "Temperature (°C)", y = "Draw Odds (Bet365)") +
-      theme_minimal()
-  })
-  
-  # Betting Odds Analysis
-  output$odds_analysis <- renderTable({
-    soccer_data %>%
-      group_by(temp_category) %>%
-      summarise(
-        avg_draw_odds = round(mean(b365d, na.rm = TRUE), 2),
-        actual_draws = sum(ftr == "D"),
-        total_matches = n(),
-        implied_prob = round(1/mean(b365d, na.rm = TRUE) * 100, 2),
-        actual_prob = round(mean(ftr == "D") * 100, 2)
-      )
+  # Odds evolution plot
+  output$odds_evolution_plot <- renderPlot({
+    tryCatch({
+      # Calculate average odds and standard errors for each temperature category
+      odds_summary <- soccer_data %>%
+        group_by(temp_category) %>%
+        summarise(
+          avg_odds = mean(b365d, na.rm = TRUE),
+          se_odds = sd(b365d, na.rm = TRUE) / sqrt(n()),
+          n_matches = n()
+        ) %>%
+        filter(!is.na(temp_category))
+      
+      # Create the plot
+      ggplot(odds_summary, aes(x = temp_category, y = avg_odds)) +
+        # Add error bars
+        geom_errorbar(aes(ymin = avg_odds - se_odds, 
+                          ymax = avg_odds + se_odds),
+                      width = 0.2, color = "#e74c3c") +
+        # Add points
+        geom_point(size = 3, color = "#e74c3c") +
+        # Add line connecting points
+        geom_line(aes(group = 1), color = "#e74c3c") +
+        # Customize appearance
+        labs(x = "Temperature Category",
+             y = "Average Draw Odds",
+             title = "Draw Odds by Temperature",
+             subtitle = paste("Based on", sum(odds_summary$n_matches), "matches")) +
+        theme_minimal() +
+        theme(
+          axis.text.x = element_text(angle = 45, hjust = 1),
+          plot.title = element_text(face = "bold"),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_line(color = "gray90")
+        )
+    }, error = function(e) {
+      print(paste("Error in odds_evolution_plot:", e$message))
+      return(NULL)
+    })
   })
 }
 
