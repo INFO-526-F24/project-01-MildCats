@@ -134,7 +134,7 @@ grouped_df <- df %>%
 grouped_df_used <- grouped_df %>%
   mutate(referee = str_replace_all(referee, " ", "_"))
 
-# Data PROCESSING (PRAJWAL)
+# Data PROCESSING (Temperature Impact Analysis)
 # Convert temperature to numeric and create temperature bins
 soccer_data$temp <- as.numeric(soccer_data$temp)
 soccer_data$temp_category <- cut(soccer_data$temp, 
@@ -272,7 +272,7 @@ ui <- fluidPage(
       )
     ),
     tabPanel(
-      "Prajwal",
+      "Temperature Impact Analysis",
       fluidRow(
         box(width = 12,
             title = "Cold Weather Impact on Draw Probability",
@@ -364,7 +364,7 @@ server <- function(input, output, session) {
       coord_polar(theta = "y") +
       labs(title = paste0("Home Team: ")) +
       theme_void() +
-      scale_fill_manual(values = c("#F05039", "#1F449C")) +
+      scale_fill_manual(values = c("#C99738", "#3D65A5")) +
       geom_text(
         aes(y = ypos, label = paste0(round(proportion, 2), "%")),
         size = 4, color = "black"
