@@ -56,6 +56,20 @@
     "text": "Proposed App Layout\n\nDescriptive Statistics\n\n\n\n\n\n\nWe aim to simply present the texture of the data with this section\n\nThe left hand panel will feature the list of teams, and the user can select 1 team to see their trend over the season, and 2, for a head-to-head comparison. When 1 team is selected, the graphical display pane will plot the dates on which the team played on the x axis, the pre-match odds on the y axis, along with a tooltip to show which team they’re playing against.\nThe dates of extreme weather, selected through extreme upper and lower percentiles, are highlighted similarly as was done in HW2 Q3. Along each plot point, the underdog or favorite is determined based on their number of wins up until that date, and color coded accordingly. When 2 teams are selected, the resulting plot will be the same, but with the dates filtered to only show matches between the 2.\n\n\n\n\nAnalysis\n\n\n\n\n\n\nIn this section, we aim to address our research questions. While we are still working on formulating the actual visualizations and analysis here, the crux of our efforts is captured in our research questions, which are detailed in the proposal."
   },
   {
+    "objectID": "index.html#data-preprocessing",
+    "href": "index.html#data-preprocessing",
+    "title": "Analyzing English Premier League Match Data",
+    "section": "Data Preprocessing",
+    "text": "Data Preprocessing\nWe started off with 3 distinct data sources as mentioned in our proposal -\n\nMatch Data\nWeather Data\nBetting Odds Data\n\nSince all these data-sets were of different dimensions and different time frames, we first had to pre-process, transform and merge these data-sets into a main data-set which would power our Shiny App.\n\nCollect Source Data\n\n\nNormalizing Data\n\n\nProcess Dates\n\n\nAppend, Join and Merge Datasets\n\nWe first append individual datasets of the same type to create a unified dataset that spans from 21-23\n\n\nNormalize column names by converting all to lowercase\n\n\nWe then join -\n\nThe weather and soccer data on [date, location]\nThe combined data with betting odds on [date, HomeTeam, AwayTeam]\n\n\n\nWe then combined the match data and weather data\n\n\nSaving the pre-processed and normalized dataset\n\n\nThis completes our data pre-processing part"
+  },
+  {
+    "objectID": "index.html#eda",
+    "href": "index.html#eda",
+    "title": "Analyzing English Premier League Match Data",
+    "section": "EDA",
+    "text": "EDA\n\nOne of the key challenges was to extend and merge the data-sets together into one main data source to power our Shiny App\n\n\n\nWhile the rest of the data is self explanatory, the betting odds are the only esoteric variables we have in our dataset\n\nOdds - Fractional - Represent the fractional payout - Example - 5 or 5/1 means 5 times the wagered amount would be paid out if the bet is won"
+  },
+  {
     "objectID": "contract.html",
     "href": "contract.html",
     "title": "Team MildCats",
