@@ -274,22 +274,28 @@ ui <- fluidPage(
     tabPanel(
       "Temperature Impact Analysis",
       fluidRow(
-        box(width = 12,
-            title = "Cold Weather Impact on Draw Probability",
-            status = "primary",
+        column(
+          12,
+          tags$div(
+            tags$h4("Cold Weather Impact on Draw Probability"),
             plotOutput("cold_impact_plot", height = "400px")
+          )
         )
       ),
       fluidRow(
-        box(width = 6,
-            title = "Draw Probability vs Temperature",
-            status = "info",
+        column(
+          6,
+          tags$div(
+            tags$h4("Draw Probability vs Temperature"),
             plotOutput("draw_prob_plot")
+          )
         ),
-        box(width = 6,
-            title = "Betting Odds Evolution (Pre-match vs Live)",
-            status = "warning",
+        column(
+          6,
+          tags$div(
+            tags$h4("Betting Odds Evolution (Pre-match vs Live)"),
             plotOutput("odds_evolution_plot")
+          )
         )
       )
     ),
